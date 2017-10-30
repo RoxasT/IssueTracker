@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  Title: MyString
+  Description: MyString
+  Type: MyString
+  Priority: 1
+  Status: MyString
+  Assignee: MyString
+  Creator: MyString
+  Created: 2017-10-30
+  Updated: 2017-10-30
+
+two:
+  Title: MyString
+  Description: MyString
+  Type: MyString
+  Priority: 1
+  Status: MyString
+  Assignee: MyString
+  Creator: MyString
+  Created: 2017-10-30
+  Updated: 2017-10-30

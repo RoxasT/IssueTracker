@@ -1,0 +1,62 @@
+<%= form_with(model: issue, local: true) do |form| %>
+  <% if issue.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(issue.errors.count, "error") %> prohibited this issue from being saved:</h2>
+
+      <ul>
+      <% issue.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :Title %>
+    <%= form.text_field :Title, id: :issue_Title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Description %>
+    <%= form.text_field :Description, id: :issue_Description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Type %>
+    <%= form.text_field :Type, id: :issue_Type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Priority %>
+    <%= form.number_field :Priority, id: :issue_Priority %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Status %>
+    <%= form.text_field :Status, id: :issue_Status %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Assignee %>
+    <%= form.text_field :Assignee, id: :issue_Assignee %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Creator %>
+    <%= form.text_field :Creator, id: :issue_Creator %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Created %>
+    <%= form.date_select :Created, id: :issue_Created %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Updated %>
+    <%= form.date_select :Updated, id: :issue_Updated %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
