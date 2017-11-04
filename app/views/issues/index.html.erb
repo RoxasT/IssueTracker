@@ -6,10 +6,10 @@
   <thead>
     <tr>
       <th>Title</th>
-      <th>Description</th>
       <th>Type</th>
       <th>Priority</th>
       <th>Status</th>
+      <th>Votes</th>
       <th>Assignee</th>
       <th>Creator</th>
       <th>Created</th>
@@ -22,14 +22,14 @@
     <% @issues.each do |issue| %>
       <tr>
         <td><%= issue.Title %></td>
-        <td><%= issue.Description %></td>
         <td><%= issue.Type %></td>
         <td><%= issue.Priority %></td>
         <td><%= issue.Status %></td>
+        <td><%= issue.Votes %></td>
         <td><%= issue.Assignee %></td>
-        <td><%= issue.Creator %></td>
-        <td><%= issue.Created %></td>
-        <td><%= issue.Updated %></td>
+        <td><%= issue.user.name %></td>
+        <td><%= issue.created_at %></td>
+        <td><%= issue.updated_at %></td>
         <td><%= link_to 'Show', issue %></td>
         <td><%= link_to 'Edit', edit_issue_path(issue) %></td>
         <td><%= link_to 'Destroy', issue, method: :delete, data: { confirm: 'Are you sure?' } %></td>

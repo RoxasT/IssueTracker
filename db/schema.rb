@@ -10,20 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171030104628) do
+ActiveRecord::Schema.define(version: 20171104104359) do
 
-  create_table "issues", force: :cascade do |t|
+  create_table "Issues", force: :cascade do |t|
     t.string "Title"
     t.string "Description"
     t.string "Type"
-    t.integer "Priority"
+    t.string "Priority"
     t.string "Status"
     t.string "Assignee"
-    t.string "Creator"
-    t.date "Created"
-    t.date "Updated"
+    t.string "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "Votes", default: 0
   end
 
   create_table "users", force: :cascade do |t|

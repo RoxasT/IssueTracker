@@ -23,40 +23,31 @@
 
   <div class="field">
     <%= form.label :Type %>
-    <%= form.text_field :Type, id: :issue_Type %>
+    <%= form.select :Type, options_for_select([["Please select", ""], "Bug", "Enhancement", "Proposal", "Task"], issue[:Type]),  :class => 'genForm_dropBox' %>
   </div>
 
   <div class="field">
     <%= form.label :Priority %>
-    <%= form.number_field :Priority, id: :issue_Priority %>
+    <%= form.select :Priority, options_for_select([["Please select", ""], "Trivial", "Minor", "Major", "Critical", "Blocker"], issue[:Priority]), :class => 'genForm_dropBox' %>
   </div>
 
   <div class="field">
     <%= form.label :Status %>
-    <%= form.text_field :Status, id: :issue_Status %>
+    <%= form.select :Status, options_for_select(["Open", "On hold", "Resolved", "Duplicate", "Invalid", "Won't fix", "Closed"]), :class => 'genForm_dropBox' %>
   </div>
 
   <div class="field">
     <%= form.label :Assignee %>
-    <%= form.text_field :Assignee, id: :issue_Assignee %>
+    <%= form.collection_select :Assignee, User.all, :name, :name, prompt: true %>
   </div>
 
-  <div class="field">
+  <div class="field" style="visibility:hidden">
     <%= form.label :Creator %>
-    <%= form.text_field :Creator, id: :issue_Creator %>
-  </div>
-
-  <div class="field">
-    <%= form.label :Created %>
-    <%= form.date_select :Created, id: :issue_Created %>
-  </div>
-
-  <div class="field">
-    <%= form.label :Updated %>
-    <%= form.date_select :Updated, id: :issue_Updated %>
+    <%= form.text_field :user_id, id: :issue_user_id, value: 1 %>
   </div>
 
   <div class="actions">
     <%= form.submit %>
   </div>
+  
 <% end %>
