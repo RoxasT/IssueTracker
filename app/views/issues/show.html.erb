@@ -51,5 +51,6 @@
 </p>
 
 <%= link_to 'Edit', edit_issue_path(@issue) %> |
-<%= link_to 'Back', issues_path %> |
-<%= link_to 'Destroy', @issue, method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to 'Destroy', @issue, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%= link_to 'Resolve' %> |
+<%= link_to 'Back', issues_path %>
