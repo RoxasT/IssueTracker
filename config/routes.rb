@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users, controllers: { :omniauth_callbacks => 'users/omniauth_callbacks' } 
   resources :issues
   resources :users
   # The priority is based upon order of creation: first created -> highest priority.
@@ -55,5 +56,6 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+  #get '/auth/google_oauth2/callback', to: 'users#auth'
   root 'issues#index'
 end
