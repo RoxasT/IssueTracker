@@ -21,7 +21,7 @@
   <tbody>
     <% @issues.each do |issue| %>
       <tr>
-        <td><%= issue.Title %></td>
+        <td><%= link_to issue.Title , issue %></td>
         <td><%= issue.Type %></td>
         <td><%= issue.Priority %></td>
         <td><%= issue.Status %></td>
@@ -30,9 +30,6 @@
         <td><%= issue.user.name %></td>
         <td><%= issue.created_at %></td>
         <td><%= issue.updated_at %></td>
-        <td><%= link_to 'Show', issue %></td>
-        <td><%= link_to 'Edit', edit_issue_path(issue) %></td>
-        <td><%= link_to 'Destroy', issue, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
