@@ -10,20 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171106104132) do
+ActiveRecord::Schema.define(version: 20171106141656) do
 
-  create_table "issues", force: :cascade do |t|
-    t.string "Title"
-    t.string "Description"
-    t.string "Type"
-    t.string "Priority"
-    t.string "Status"
-    t.string "Assignee"
-    t.string "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "Votes", default: 0
-  end
+# Could not dump table "issues" because of following StandardError
+#   Unknown type 'User' for column 'assignee_id'
 
   create_table "users", force: :cascade do |t|
     t.string "name"

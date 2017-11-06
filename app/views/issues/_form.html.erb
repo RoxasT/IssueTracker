@@ -38,7 +38,7 @@
 
   <div class="field">
     <%= form.label :Assignee %>
-    <%= form.collection_select :Assignee, User.all, :name, :name, prompt: true %>
+    <%= form.collection_select :assignee_id, User.all, :id, :name, prompt: true %>
   </div>
 
   <div class="field" style="visibility:hidden">

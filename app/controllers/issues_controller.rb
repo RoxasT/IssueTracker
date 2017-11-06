@@ -25,7 +25,8 @@ class IssuesController < ApplicationController
   # POST /issues
   # POST /issues.json
   def create
-    @issue = current_user.issues.create(issue_params)
+    @issue = Issue.new(issue_params)
+    @issue.user_id = current_user.id
     respond_to do |format|
       if @issue.save
         format.html { redirect_to @issue, notice: 'Issue was successfully created.' }
@@ -69,6 +70,6 @@ class IssuesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def issue_params
-      params.require(:issue).permit(:Title, :Description, :Type, :Priority, :Status, :Assignee, :user_id)
+      params.require(:issue).permit(:Title, :Description, :Type, :Priority, :Status, :assignee_id, :user_id)
     end
 end
