@@ -1,7 +1,9 @@
 <!DOCTYPE html>
     <p id="notice"><%= notice %></p>
-  
-    <h1>Issues</h1>
+
+    <%= link_to 'New Issue', new_issue_path, class:"btn btn-lg btn-primary", id:"new" %>
+
+    <h1 class="titolprincipal">Issues</h1>
     
     <table>
       <thead>
@@ -37,6 +39,3 @@
     </table>
     
     <br>
-    
-    <%= link_to 'New Issue', new_issue_path %>
-    

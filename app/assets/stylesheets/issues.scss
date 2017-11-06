@@ -2,6 +2,20 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-h1 {
-    color: #eee;
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+.titolprincipal {
+    font-size: 40px;
+    color: #000;
+    font-family: sans-serif;
+    margin-left: 25px;
+    margin-top: 40px;
 }
+
+#new {
+    float:right;
+    font-color:#000;
+    background-color: #fff;
+}
+
