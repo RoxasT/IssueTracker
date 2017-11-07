@@ -1,22 +1,50 @@
 <!DOCTYPE html>
     <p id="notice"><%= notice %></p>
 
-    <%= link_to 'New Issue', new_issue_path, class:"btn btn-lg btn-primary", id:"new" %>
+    <%= link_to 'New Issue', new_issue_path, class:"btn btn-primary btn-lg active", id:"new" %>
 
     <h1 class="titolprincipal">Issues</h1>
     
-    <table>
+    <ul class="nav nav-pills">
+      
+      <li class="nav-item">
+          Filter by:
+        </li>
+      
+      <li class="nav-item">
+        <a class="nav-link active" href="#">Assigned</a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="#">Reported</a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="#">Participating</a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="#">Watching</a>
+      </li>     
+
+      <li class="nav-item">
+        <a class="nav-link" href="#">Teams</a>
+      </li>
+
+    </ul>
+    
+    <table class="table table-sm marges">
       <thead>
         <tr>
-          <th>Title</th>
-          <th>Type</th>
-          <th>Priority</th>
-          <th>Status</th>
-          <th>Votes</th>
-          <th>Assignee</th>
-          <th>Creator</th>
-          <th>Created</th>
-          <th>Updated</th>
+          <th scope="col">Title</th>
+          <th scope="col">Type</th>
+          <th scope="col">Priority</th>
+          <th scope="col">Status</th>
+          <th scope="col">Votes</th>
+          <th scope="col">Assignee</th>
+          <th scope="col">Creator</th>
+          <th scope="col">Created</th>
+          <th scope="col">Updated</th>
           <th colspan="3"></th>
         </tr>
       </thead>
@@ -24,7 +52,7 @@
       <tbody>
         <% @issues.each do |issue| %>
           <tr>
-            <td><%= link_to issue.Title , issue %></td>
+            <td><%= link_to issue.Title , issue, class:"btn-link" %></td>
             <td><%= issue.Type %></td>
             <td><%= issue.Priority %></td>
             <td><%= issue.Status %></td>
