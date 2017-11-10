@@ -1,15 +1,109 @@
 <!DOCTYPE html>
-    <p id="notice"><%= notice %></p>
+  
+  
+  <div class="header">
+  <div class="section-title">
+    <h1>Issues</h1>
+  </div>
+  <div class="page-actions">
+    <% if current_user %>
+      <%= link_to new_issue_path, class: 'aui-button aui-button-subtle' do %>
+        <span class="add-icon">+</span>
+        <span class="aui-button-label">Create issue</span>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+
+<div class="issues">
+
+  <div class="issues-toolbar">
+    <div class="filter-container">
+      <p class="filter-label">Filters:</p>
+      <ul class="filter-status">
+        <li id="all" class="aui-button">
+          <a href="/issues">All</a>
+        </li>
+        
+        <li id="open" class="aui-button">
+          <a href="#">Open</a>
+        </li>
+      
+        <li id="mine" class="aui-button">
+          <a href="#">Assigned</a>
+        </li>
+      
+        <li id="watching" class="aui-button">
+          <a href="#">Watching</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Issues (<%= @issues.to_a.size %>)</h2>
+
+  <p id="issues-filter-criteria">
+    <% if request.query_parameters[:kind] %>
+      <b>type:</b> "<%= request.query_parameters[:kind] %>"
+    <% end %>
+    <% if request.query_parameters[:priority] %>
+        <b>priority:</b> "<%= request.query_parameters[:priority] %>"
+    <% end %>
+    <% if request.query_parameters[:status] %>
+        <b>status:</b> "<%= Issue.statuses[request.query_parameters[:status]] %>"
+    <% end %>
+    <% if request.query_parameters[:responsible] %>
+        <b>assignee:</b> "<%= request.query_parameters[:responsible] %>"
+    <% end %>
+  </p>
+
+  <table class="issue-list">
+    <thead>
+      <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Type</th>
+          <th scope="col">Priority</th>
+          <th scope="col">Status</th>
+          <th scope="col">Votes</th>
+          <th scope="col">Assignee</th>
+          <th scope="col">Creator</th>
+          <th scope="col">Created</th>
+          <th scope="col">Updated</th>
+          <th colspan="3"></th>
+        </tr>
+    </thead>
+    <tbody>
+      <tbody>
+        <% @issues.each do |issue| %>
+          <tr>
+            <td><%= link_to issue.Title , issue, class:"btn-link" %></td>
+            <td><%= issue.Type %></td>
+            <td><%= issue.Priority %></td>
+            <td><%= issue.Status %></td>
+            <td><%= issue.Votes %></td>
+            <td><%= issue.assignee.name %></td>
+            <td><%= issue.user.name %></td>
+            <td><%= issue.created_at %></td>
+            <td><%= issue.updated_at %></td>
+          </tr>
+        <% end %>
+      </tbody>
+  </table>
+</div>
+  
+  
+  
+  <!--   <p id="notice"><%= notice %></p>
 
     <%= link_to 'New Issue', new_issue_path, class:"btn btn-primary btn-lg active", id:"new" %>
 
     <h1 class="titolprincipal">Issues</h1>
     
-    <ul class="nav nav-pills">
+    
+    <ul class="nav nav-pills filt">
       
-      <li class="nav-item">
-          Filter by:
-        </li>
+      <li class="nav-item filter">FILTER BY:</li>
       
       <li class="nav-item">
         <a class="nav-link active" href="#">Assigned</a>
@@ -32,6 +126,7 @@
       </li>
 
     </ul>
+      
     
     <table class="table table-sm marges">
       <thead>
@@ -66,4 +161,6 @@
       </tbody>
     </table>
     
-    <br>
+    <br> -->
+    
+    
