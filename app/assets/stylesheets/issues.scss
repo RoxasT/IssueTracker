@@ -2,21 +2,588 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-@import "bootstrap-sprockets";
-@import "bootstrap";
-
-.titolprincipal {
-    font-size: 40px;
-    color: #000;
-    font-family: sans-serif;
-    margin-left: 25px
+body {
+  font-family: Arial, sans-serif;
+  margin: 0 auto;
+  padding: 20px;
+  color: #333;
+  font-size: 14px;
 }
 
-#new {
-    float:right;
+div {
+  display: block;
 }
 
-.marges {
-    margin-top: 50px;
+a {
+  color: #3572b0;
+  text-decoration: none;
 }
 
+h1 {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+
+
+.aui-button, .aui-button:visited {
+  box-sizing: border-box;
+  background: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 3.01px;
+  color: #333;
+  cursor: pointer;
+  display: inline-block;
+  font-family: inherit;
+  font-size: 14px;
+  font-variant: normal;
+  font-weight: 400;
+  height: 2.14285714em;
+  margin: 0;
+  padding: 4px 10px;
+  text-decoration: none;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.aui-button.aui-button-subtle {
+  background: 0 0;
+  border-color: transparent;
+  color: #707070;
+}
+
+.aui-button:hover {
+  background: #e9e9e9;
+  border-color: #999;
+  color: #333;
+  text-decoration: none;
+}
+
+
+.header {
+  height: 50px;
+  display: table;
+  box-sizing: border-box;
+  width: 100%;
+
+  .section-title {
+    display: table-cell;
+    vertical-align: top;
+    width: 384px;
+  }
+
+  .page-actions {
+    display: table-cell;
+    vertical-align: top;
+    width: 576px;
+    font-size: 0;
+    text-align: right;
+    width: 60%;
+
+    .add-icon {
+      font-size: 18px;
+      margin-right: 2px;
+      font-weight: bold;
+      left: 0;
+      line-height: 1;
+    }
+  }
+}
+
+.issues {
+  display: block;
+
+  .issues-toolbar {
+    width: 100%;
+    height: 42px;
+
+    .filter-container {
+      float: left;
+      margin: 5px 0 0 0;
+      height: 42px;
+
+      .filter-label {
+        float: left;
+        margin-right: 10px;
+        line-height: 30px;
+        color: #707070;
+        display: inline-block;
+        text-transform: uppercase;
+        margin-top: 0;
+        margin-bottom: 0;
+        position: relative;
+        top: 3px;
+      }
+
+      .filter-status {
+        float: left;
+        margin: 0;
+        padding: 3px 0;
+        list-style: none;
+        line-height: 20px;
+        display: block;
+
+        li {
+          float: left;
+          margin-right: 10px;
+          display: list-item;
+          text-align: -webkit-match-parent;
+
+          a {
+            text-align: center;
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+
+  .issue-list {
+    font-size: 14px;
+    display: table;
+    border-spacing: 2px;
+    border-color: grey;
+    line-height: 18px;
+    width: 100%;
+    border-collapse: collapse;
+
+    thead {
+      font-size: 14px;
+      text-align: left;
+    }
+    th {
+      font-weight: bold;
+      display: table-cell;
+      padding: 7px 10px;
+
+    }
+    th:hover:after {
+      border-top-color: #333;
+      border-bottom-color: transparent;
+      opacity: .5;
+      top: 2px;
+    }
+    th:after {
+      border: 4px solid transparent;
+      content: "";
+      display: inline-block;
+      margin-left: 5px;
+      position: relative;
+      width: 0;
+    }
+
+    .current {
+      background-color: #f5f5f5;
+      color: #333;
+      cursor: pointer;
+    }
+
+    .current:after {
+      border-top-color: #333;
+      border-bottom-color: transparent;
+      top: 2px;
+    }
+    .asc:after, .asc:hover:after {
+      border-top-color: transparent;
+      border-bottom-color: #333;
+      opacity: .5;
+      top: -2px;
+    }
+    .desc {
+
+    }
+    .current:after, .asc:hover:after, .desc:hover:after {
+      opacity: 1;
+    }
+
+    th > a {
+      color: inherit;
+    }
+    th:hover {
+      background-color: #f5f5f5;
+      color: #333;
+      cursor: pointer;
+    }
+
+    td {
+      display: table-cell;
+      padding: 7px 10px;
+    }
+    td.date {
+      width: 102px;
+    }
+    td.text {
+      max-width: 180px;
+      box-sizing: border-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    tr {
+      display: table-row;
+      background: #fff;
+      border-bottom: 1px solid #ccc;
+      color: #333;
+    }
+    tbody tr:hover {
+      background-color: #f5f5f5;
+    }
+  }
+}
+
+.issue-main-content {
+  display: table;
+  width: 100%;
+
+  .issue-info {
+    display: table-cell;
+    box-sizing: border-box;
+
+    h1 {
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    .issue-id {
+      font-size: 14px;
+    }
+
+    .issue-author {
+      position: relative;
+      height: 20px;
+      display: inline;
+      padding-left: 42px;
+
+      a {
+        font-weight: 700;
+
+        .aui-avatar-medium {
+          position: absolute;
+          top: 3px;
+          left: 0;
+
+          .aui-avatar-inner {
+            height: 32px;
+            width: 32px;
+            display: table-cell;
+            vertical-align: middle;
+          }
+
+          img {
+            max-height: 32px;
+            max-width: 32px;
+          }
+        }
+
+        span {
+          font-weight: bold;
+          margin-right: 5px;
+        }
+      }
+
+      .created_at {
+        color: #707070;
+        font-size: small;
+      }
+    }
+
+    .issue-description {
+      margin-top: 5px;
+      font-size: 14px;
+      padding-left: 42px;
+
+      .no-description {
+        font-style: italic;
+      }
+    }
+  }
+
+  .sidebar{
+    display: table-cell;
+    box-sizing: border-box;
+    padding-left: 40px;
+    width: 350px;
+
+    .issue-attrs {
+      border: 1px #ccc solid;
+      border-radius: 5px;
+      margin-top: 10px;
+      padding: 10px;
+      line-height: 1.7;
+
+      dl {
+        display: block;
+        -webkit-margin-before: 1em;
+        -webkit-margin-after: 1em;
+        -webkit-margin-start: 0;
+        -webkit-margin-end: 0;
+        margin: 5px 0;
+        padding-left: 120px;
+
+        dd {
+          margin: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          display: block;
+        }
+
+        dd.with-icon {
+          display: block;
+          margin: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          span {
+            position: relative;
+            top: 3px;
+          }
+        }
+
+        dt {
+          display: block;
+          float: left;
+          margin-left: -135px;
+          text-align: right;
+          width: 120px;
+        }
+      }
+    }
+  }
+}
+
+.aui-avatar-medium {
+  height: 32px;
+  width: 32px;
+}
+
+.aui-avatar {
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: text-bottom;
+}
+
+.icon-kind {
+  top: 2px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 16px;
+  text-align: left;
+  overflow: hidden;
+  text-indent: -9999px;
+  width: 16px;
+}
+
+.icon-task {
+  background-image: image-url('issue_kinds/task.svg');
+}
+
+.icon-bug {
+  background-image: image-url('issue_kinds/bug.svg');
+}
+
+.icon-proposal {
+  background-image: image-url('issue_kinds/suggestion.svg');
+}
+
+.icon-enhancement {
+  background-image: image-url('issue_kinds/improvement.svg');
+}
+
+.icon-priority {
+  top: 2px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 16px;
+  text-align: left;
+  overflow: hidden;
+  text-indent: -9999px;
+  width: 16px;
+}
+
+.icon-minor {
+  background-image: image-url('issue_priorities/minor.svg');
+}
+
+.icon-trivial {
+  background-image: image-url('issue_priorities/trivial.svg');
+}
+
+.icon-critical {
+  background-image: image-url('issue_priorities/critical.svg');
+}
+
+.icon-major {
+  background-image: image-url('issue_priorities/major.svg');
+}
+
+.icon-blocker {
+  background-image: image-url('issue_priorities/blocker.svg');
+}
+
+.aui-badge {
+  border-radius: 2em;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: .99;
+  min-height: 1em;
+  min-width: 1em;
+  padding: 3px 5px 2px;
+  position: relative;
+  text-shadow: none;
+  display: inline-block;
+  margin: 0;
+  text-decoration: none;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.issue-count-no {
+  background: #326ca6;
+  color: #fff;
+}
+
+.issue-count-yes {
+  background: rgba(0,0,0,.2);
+  color: rgba(51,51,51,.8);
+}
+
+.myFile {
+  margin-top: 10px;
+  width: 90px;
+  height: 30px;
+  overflow: hidden;
+  position: relative;
+}
+.myFile > input[type="file"] {
+  font-size: 200px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0;
+}
+.myFile > .aui-button {
+  display: inline-block;
+  width: 90px;
+  height: 30px;
+}
+.myFile:hover > .aui-button {
+  background: #e9e9e9;
+  border-color: #999;
+  color: #000;
+  text-decoration: none;
+}
+
+.attached-files-list {
+  margin: 0;
+  padding: 0;
+  display: block;
+  max-width: 600px;
+  list-style-type: disc;
+    li:last-child {
+      border-bottom: 1px solid #ccc;
+    }
+    li {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      border-top: 1px solid #ccc;
+      margin: 0;
+      padding: 5px 10px;
+      position: relative;
+      display: list-item;
+      text-align: -webkit-match-parent;
+      color: #333;
+      font-family: sans-serif;
+      font-size: 14px;
+      line-height: 1.42857142857143;
+    }
+}
+
+.issue-attachment-list {
+  list-style: none;
+  padding: 0;
+
+  a.attachment-link {
+    display: block;
+    width: 178px;
+  }
+
+  a .placeholder.default {
+    background: image-url('clip.png') no-repeat 50% 50% #f5f5f5;
+  }
+
+  a .placeholder {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    display: block;
+    font-size: 0;
+    height: 100px;
+    line-height: 100px;
+    margin-bottom: 5px;
+    text-align: center;
+    width: 100%;
+  }
+
+  li {
+    position: relative;
+    float: left;
+    margin: 0 15px 13px 0;
+    display: list-item;
+    text-align: -webkit-match-parent;
+  }
+}
+
+.delete-attachment {
+  height: 24px;
+  position: absolute;
+  right: -12px;
+  top: -8px;
+  width: 24px;
+  background: #fff;
+  border-radius: 12px;
+}
+.delete-attachment:hover {
+  text-decoration: none;
+}
+
+.attachments {
+  margin: 13px 0 0;
+  padding-left: 42px;
+}
+
+.issue-toolbar {
+  float: right;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+.delete-icon {
+  height: 100%;
+  width: 100%;
+  opacity: 0.6;
+}
+
+.delete-icon:hover {
+  opacity: 1;
+}
+
+.attached-files-list .delete-attachment {
+  right: 5px;
+  top: 3px;
+}
+
+.assignee-icon {
+  height: 16px;
+  width: 16px;
+  margin-right: 5px;
+}

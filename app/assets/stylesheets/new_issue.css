@@ -1,0 +1,136 @@
+.title {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-left: 30px;
+}
+
+form {
+    display: block;
+    margin-top: 30px;
+    position: relative;
+}
+
+.input-group {
+    box-sizing: border-box;
+    clear: both;
+    padding: 4px 0 4px 145px;
+    position: relative;
+    margin: 2px 0;
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+#bootstrap-overrides label {
+    font-weight: lighter;
+}
+
+label {
+    float: left;
+    margin-left: -145px;
+    padding-top: 5px;
+    font-size: 14px;
+    position: relative;
+    text-align: right;
+    width: 130px;
+    word-wrap: break-word;
+    color: #707070;
+    cursor: default;
+    line-height: 1.42857142857143;
+    font-family: Arial,sans-serif;
+    font-weight: lighter !important;
+}
+
+input, textarea {
+    padding: 4px 5px;
+    border: 1px solid #ccc;
+    border-radius: 3.01px;
+    box-sizing: border-box;
+    font-size: inherit;
+    max-width: 600px;
+    width: 100%;
+    background: #fff;
+    color: #333;
+    font-family: inherit;
+    line-height: 1.42857142857143;
+}
+
+input {
+    height: 2.14285714em;
+    vertical-align: baseline;
+}
+
+textarea {
+    height: 192px;
+}
+
+.submit {
+    font-size: 14px;
+    background: #3572b0;
+    border-color: transparent;
+    color: #fff;
+    font-weight: 700;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+    clear: both;
+    width: 110px;
+    box-sizing: border-box;
+    border-radius: 3.01px;
+    cursor: pointer;
+    display: inline;
+    font-variant: normal;
+    height: 2.14285714em;
+    line-height: 1.42857142857143;
+    margin-left: 145px;
+    padding-right: 4px;
+    text-decoration: none;
+    vertical-align: baseline;
+    white-space: nowrap;
+}
+
+
+.cancel {
+    padding: 5px 10px;
+}
+
+.cancel:hover {
+    background-color: #FFF;
+    text-decoration: underline;
+    color: blue;
+}
+
+.back-button {
+    padding-top: 10px;
+}
+
+.errors li {
+    color: #f00;
+}
+
+select {
+    box-sizing: border-box;
+    background: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    color: inherit;
+    cursor: pointer;
+    display: inline-block;
+    filter: none;
+    font-family: inherit;
+    font-size: inherit;
+    font-variant: normal;
+    font-weight: 400;
+    line-height: 1.4285714285714;
+    margin: 0;
+    padding: 4px 10px;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #fff;
+    vertical-align: top;
+    white-space: nowrap;
+    width: 250px;
+    height: 30px;
+}
+
+.actions {
+    margin-top: 10px;
+}

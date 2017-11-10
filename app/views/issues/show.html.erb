@@ -1,5 +1,9 @@
 <p id="notice"><%= notice %></p>
 
+<%= link_to 'Create Issue', new_issue_path, class:"btn btn-primary btn-lg active", id:"create" %>
+
+<h1 class="titolshow"> <%= @issue.Title %> </h1>
+
 <p>
   <strong>Title:</strong>
   <%= @issue.Title %>
