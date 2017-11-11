@@ -36,7 +36,7 @@
 
 <p>
   <strong>Assignee:</strong>
-  <%= @issue.assignee.name %>
+  <%= @issue.assignee.name if !@issue.assignee.nil? %>
 </p>
 
 <p>
