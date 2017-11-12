@@ -24,27 +24,22 @@
 
   <div class="input-group">
     <%= form.label :Type %>
-    <%= form.select :Type, options_for_select([["Please select", ""], "Bug", "Enhancement", "Proposal", "Task"], issue[:Type]),  :class => 'genForm_dropBox' %>
+    <%= form.select :Type, options_for_select([["Please select", ""]]+Issue.type, issue[:Type]),  :class => 'genForm_dropBox' %>
   </div>
 
   <div class="input-group">
     <%= form.label :Priority %>
-    <%= form.select :Priority, options_for_select([["Please select", ""], "Trivial", "Minor", "Major", "Critical", "Blocker"], issue[:Priority]), :class => 'genForm_dropBox' %>
+    <%= form.select :Priority, options_for_select([["Please select", ""]]+Issue.priority, issue[:Priority]), :class => 'genForm_dropBox' %>
   </div>
 
   <div class="input-group">
     <%= form.label :Status %>
-    <%= form.select :Status, options_for_select(["Open", "On hold", "Resolved", "Duplicate", "Invalid", "Won't fix", "Closed"]), :class => 'genForm_dropBox' %>
+    <%= form.select :Status, options_for_select(Issue.status), :class => 'genForm_dropBox' %>
   </div>
 
   <div class="input-group">
     <%= form.label :Assignee %>
     <%= form.collection_select :assignee_id, User.all, :id, :name, prompt: true %>
-  </div>
-
-  <div class="input-group" style="visibility:hidden">
-    <%= form.label :Creator %>
-    <%= form.text_field :user_id, id: :issue_user_id, value: 1 %>
   </div>
 
   <div class="actions">
