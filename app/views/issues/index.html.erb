@@ -82,10 +82,10 @@
             <td><%= issue.Priority %></td>
             <td><%= issue.Status %></td>
             <td><%= issue.Votes %></td>
-            <td><%= issue.assignee.name %></td>
+            <td><%= issue.assignee.name  if !issue.assignee.nil? %></td>
             <td><%= issue.user.name %></td>
-            <td><%= issue.created_at %></td>
-            <td><%= issue.updated_at %></td>
+            <td><%= time_ago_in_words(issue.created_at) + " ago" %></td>
+            <td><%= time_ago_in_words(issue.updated_at) + " ago" %></td>
           </tr>
         <% end %>
       </tbody>
@@ -152,7 +152,7 @@
             <td><%= issue.Priority %></td>
             <td><%= issue.Status %></td>
             <td><%= issue.Votes %></td>
-            <td><%= issue.assignee.name %></td>
+            <td><%= issue.assignee.name if !issue.assignee.nil? %></td>
             <td><%= issue.user.name %></td>
             <td><%= issue.created_at %></td>
             <td><%= issue.updated_at %></td>

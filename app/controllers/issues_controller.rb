@@ -51,6 +51,14 @@ class IssuesController < ApplicationController
       end
     end
   end
+  
+  def update_status
+    respond_to do |format|
+      @issue_to_update = Issue.find(params[:id])
+      @issue_to_update.update_attribute("Status", params[:status])
+      format.html { redirect_to @issue_to_update }
+    end
+  end
 
   # DELETE /issues/1
   # DELETE /issues/1.json

@@ -36,7 +36,7 @@
 
 <p>
   <strong>Assignee:</strong>
-  <%= @issue.assignee.name %>
+  <%= @issue.assignee.name if !@issue.assignee.nil? %>
 </p>
 
 <p>
@@ -46,12 +46,12 @@
 
 <p>
   <strong>Created:</strong>
-  <%= @issue.created_at %>
+  <%= time_ago_in_words(@issue.created_at) + " ago" %>
 </p>
 
 <p>
   <strong>Updated:</strong>
-  <%= @issue.updated_at %>
+  <%= time_ago_in_words(@issue.updated_at) + " ago" %>
 </p>
 
 <%= link_to 'Edit', edit_issue_path(@issue) %> |
@@ -86,5 +86,21 @@
   </p>
 <% end %>
  
-<%= link_to 'Edit', edit_issue_path(@issue) %> |
-<%= link_to 'Back', issues_path %>
+<p>
+  <% if @issue.Status == "Open" || @issue.Status == "New" %> 
+    <%= link_to 'Resolve', update_status_url(id: @issue.id, status: "Resolved")%>
+  <% else %>
+    <%= link_to 'Open', update_status_url(id: @issue.id, status: "Open")%>
+  <% end %>
+</p>
+<div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Workflow
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <% Issue.status.each do |status| %>
+        <% if status != @issue.Status %>
+          <%= content_tag(:li, link_to(status, update_status_url(id: @issue.id, status: status))) %>
+        <% end %>
+      <% end %>
+    </ul>
+</div>
