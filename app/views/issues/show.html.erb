@@ -1,9 +1,122 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to 'Create Issue', new_issue_path, class:"btn btn-primary btn-lg active", id:"create" %>
+<div class="header">
+  <div class="section-title">
+    <h1><%= @issue.Title %></h1>
+  </div>
+  <div class="page-actions">
+    <% if current_user %>
+      <%= link_to new_issue_path, class: 'create-button' do %>
+        <span class="add-icon">+</span>
+        <span class="createi-button">Create issue</span>
+      <% end %>
+    <% end %>
+  </div>
+</div>
 
-<h1 class="titolshow"> <%= @issue.Title %> </h1>
+<div class="main-view">
+  <div class="issue-header">
+    <span class="issue-id">
+      Issue #<%= @issue.id %>
+    </span>
+    <span class="issue-status">
+      <%= @issue.Status %>
+    </span>
+    <div class="issue-toolbar">
+      <% if current_user %>
+          <a href="/issues/<%= @issue.id %>/attach" class="show-button">Attach</a>
 
+          <a href="/issues/<%= @issue.id %>/edit" class="show-button">Edit</a>
+            
+          <%= link_to 'Delete', @issue,  method: :delete, class: 'show-button', data: { confirm: 'Are you sure you want to delete this issue?' } %>
+      <% end %>
+    </div>
+  </div>
+  
+  <div class="issue-main-content">
+    
+    <div class="issue-info">
+
+      <div class="issue-author">
+        <a href="/issues?responsible=<%= @issue.user.name %>">
+          
+          <!-- AQUI ES POSARIA LA FOTO DE PERFIL --> 
+          
+          <span title="author-name"><%= @issue.user.name %></span>
+        </a>
+        created an issue
+        <time class="created_at"><%= @issue.created_at.strftime('%Y-%m-%d')
+        %></time>
+      </div>
+
+      <div class="issue-description">
+        <% if @issue.Description %>
+            <p class="description"><%= @issue.Description %></p>
+        <% else %>
+            <p class="no-description">No description provided.</p>
+        <% end %>
+      </div>
+    
+      <!-- BLOC ATTACHMENTS -->
+      
+      <div class="issue-comments-container">
+        
+      </div>
+      
+      <div class="sidebar">
+        <div class="issue-attrs">
+          <dl>
+            <dt>Assigned to</dt>
+            <dd>
+              <a href="/issues?responsible=<%= @issue.assignee.name if !@issue.assignee.nil? %>">
+                <span title="author-name"><%= @issue.assignee.name %></span>
+              </a>
+            </dd>
+          </dl>
+          
+          <dl>
+            <dt>Type</dt>
+            <dd class="type with-icon">
+              <%= @issue.Type %>
+            </dd>
+          </dl>
+          
+          <dl>
+            <dt>Priority</dt>
+            <dd class="priority with-icon">
+              <%= @issue.Priority %>
+            </dd>
+          </dl>
+          
+          <dl>
+            <dt>Status</dt>
+            <dd class="status with-icon">
+              <%= @issue.Status %>
+            </dd>
+          </dl>
+          
+          <dl>
+            <dt>Votes</dt>
+            <dd class="votes">
+                <%= @issue.Votes %>
+              </span>
+            </dd>
+          </dl>
+          
+      </div>
+    </div>
+  </div>
+</div>
+  
+  
+  
+  
+  
+  
+   
+    
+  
+  
 <p>
   <strong>Title:</strong>
   <%= @issue.Title %>

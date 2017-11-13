@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-  
-  
-  <div class="header">
+
+<div class="header">
   <div class="section-title">
     <h1>Issues</h1>
   </div>
   <div class="page-actions">
     <% if current_user %>
-      <%= link_to new_issue_path, class: 'aui-button aui-button-subtle' do %>
+      <%= link_to new_issue_path, class: 'create-button' do %>
         <span class="add-icon">+</span>
-        <span class="aui-button-label">Create issue</span>
+        <span class="createi-button">Create issue</span>
       <% end %>
     <% end %>
   </div>
