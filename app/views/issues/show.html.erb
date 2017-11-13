@@ -55,8 +55,37 @@
 </p>
 
 <%= link_to 'Edit', edit_issue_path(@issue) %> |
-<%= link_to 'Destroy', @issue, method: :delete, data: { confirm: 'Are you sure?' } %> |
-<%= link_to 'Back', issues_path %>
+<%= link_to 'Back', issues_path %> |
+<%= link_to 'Destroy', @issue, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+<h2>Comments</h2>
+<% @issue.comments.each do |comment| %>
+  <p>
+    <strong>Commenter:</strong>
+    <%= comment.commenter %>
+  </p>
+ 
+  <p>
+    <strong>Comment:</strong>
+    <%= comment.body %>
+  </p>
+<% end %>
+ 
+<h2>Add a comment:</h2>
+<%= form_with(model: [ @issue, @issue.comments.build ], local: true) do |form| %>
+  <p>
+    <%= form.label :commenter %><br>
+    <%= form.text_field :commenter %>
+  </p>
+  <p>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
+ 
 <p>
   <% if @issue.Status == "Open" || @issue.Status == "New" %> 
     <%= link_to 'Resolve', update_status_url(id: @issue.id, status: "Resolved")%>
