@@ -60,30 +60,32 @@
 
 <h2>Comments</h2>
 <% @issue.comments.each do |comment| %>
+  <div>
   <p>
     <strong>Commenter:</strong>
-    <%= comment.commenter %>
+    <%= comment.user.name %>
   </p>
  
   <p>
     <strong>Comment:</strong>
     <%= comment.body %>
   </p>
+  <%= link_to 'Delete Comment', [comment.issue, comment],
+               method: :delete,
+               data: { confirm: 'Are you sure?' } %>
+  </div>
+  </br>
 <% end %>
  
 <h2>Add a comment:</h2>
 <%= form_with(model: [ @issue, @issue.comments.build ], local: true) do |form| %>
-  <p>
-    <%= form.label :commenter %><br>
-    <%= form.text_field :commenter %>
-  </p>
-  <p>
-    <%= form.label :body %><br>
+  <div class="input-group">
+    <%= form.label :body %>
     <%= form.text_area :body %>
-  </p>
-  <p>
+  </div>
+  <div class="actions">
     <%= form.submit %>
-  </p>
+  </div>
 <% end %>
  
 <p>
