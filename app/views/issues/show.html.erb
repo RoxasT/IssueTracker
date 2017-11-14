@@ -23,7 +23,30 @@
       <%= @issue.Status %>
     </span>
     <div class="issue-toolbar">
+      
       <% if current_user %>
+      
+          <p class="resol">
+            <% if @issue.Status == "Open" || @issue.Status == "New" %> 
+            
+              <a class="resolved"> <%= link_to 'Resolve', update_status_url(id: @issue.id, status: "Resolved") %> </a>
+            <% else %>
+              <%= link_to 'Open', update_status_url(id: @issue.id, status: "Open"), class:'open'%>
+            <% end %>
+          </p>
+          
+          <div class="dropdown">
+              <button class="show-button dropdown-toggle" type="button" data-toggle="dropdown">Workflow
+              <span class="caret"></span></button>
+              <ul class="dropdown-menu">
+                <% Issue.status.each do |status| %>
+                  <% if status != @issue.Status %>
+                    <%= content_tag(:li, link_to(status, update_status_url(id: @issue.id, status: status))) %>
+                  <% end %>
+                <% end %>
+              </ul>
+          </div>
+      
           <a href="/issues/<%= @issue.id %>/attach" class="show-button">Attach</a>
 
           <a href="/issues/<%= @issue.id %>/edit" class="show-button">Edit</a>
@@ -61,6 +84,34 @@
       
       <div class="issue-comments-container">
         
+        <h2>Comments (<%= @comments.to_a.size %>)</h2>
+        
+        <% @issue.comments.each do |comment| %>
+          <div>
+          <p>
+            <strong>Commenter:</strong>
+            <%= comment.user.name %>
+          </p>
+         
+          <p>
+            <strong>Comment:</strong>
+            <%= comment.body %>
+          </p>
+          <%= link_to 'Delete Comment', [comment.issue, comment],
+                       method: :delete,
+                       data: { confirm: 'Are you sure?' } %>
+          </div>
+          </br>
+        <% end %>
+        
+        <%= form_with(model: [@issue, @issue.comments.build], local: true) do |form| %>
+          <div class="input-group">
+            <%= form.text_area :body, placeholder:'What do you want to say?' %>
+          </div>
+          <div class="actions">
+            <%= form.submit %>
+          </div>
+        <% end %>
       </div>
       
       <div class="sidebar">
@@ -105,115 +156,6 @@
           
       </div>
     </div>
-  </div>
-</div>
-  
-  
-  
-  
-  
-  
-   
     
-  
-  
-<p>
-  <strong>Title:</strong>
-  <%= @issue.Title %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @issue.Description %>
-</p>
-
-<p>
-  <strong>Type:</strong>
-  <%= @issue.Type %>
-</p>
-
-<p>
-  <strong>Priority:</strong>
-  <%= @issue.Priority %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @issue.Status %>
-</p>
-
-<p>
-  <strong>Votes:</strong>
-  <%= @issue.Votes %>
-</p>
-
-<p>
-  <strong>Assignee:</strong>
-  <%= @issue.assignee.name if !@issue.assignee.nil? %>
-</p>
-
-<p>
-  <strong>Creator:</strong>
-  <%= @issue.user.name %>
-</p>
-
-<p>
-  <strong>Created:</strong>
-  <%= time_ago_in_words(@issue.created_at) + " ago" %>
-</p>
-
-<p>
-  <strong>Updated:</strong>
-  <%= time_ago_in_words(@issue.updated_at) + " ago" %>
-</p>
-
-<%= link_to 'Edit', edit_issue_path(@issue) %> |
-<%= link_to 'Back', issues_path %> |
-<%= link_to 'Destroy', @issue, method: :delete, data: { confirm: 'Are you sure?' } %>
-
-<h2>Comments</h2>
-<% @issue.comments.each do |comment| %>
-  <p>
-    <strong>Commenter:</strong>
-    <%= comment.commenter %>
-  </p>
- 
-  <p>
-    <strong>Comment:</strong>
-    <%= comment.body %>
-  </p>
-<% end %>
- 
-<h2>Add a comment:</h2>
-<%= form_with(model: [ @issue, @issue.comments.build ], local: true) do |form| %>
-  <p>
-    <%= form.label :commenter %><br>
-    <%= form.text_field :commenter %>
-  </p>
-  <p>
-    <%= form.label :body %><br>
-    <%= form.text_area :body %>
-  </p>
-  <p>
-    <%= form.submit %>
-  </p>
-<% end %>
- 
-<p>
-  <% if @issue.Status == "Open" || @issue.Status == "New" %> 
-    <%= link_to 'Resolve', update_status_url(id: @issue.id, status: "Resolved")%>
-  <% else %>
-    <%= link_to 'Open', update_status_url(id: @issue.id, status: "Open")%>
-  <% end %>
-</p>
-<div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Workflow
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-      <% Issue.status.each do |status| %>
-        <% if status != @issue.Status %>
-          <%= content_tag(:li, link_to(status, update_status_url(id: @issue.id, status: status))) %>
-        <% end %>
-      <% end %>
-    </ul>
+  </div>
 </div>
