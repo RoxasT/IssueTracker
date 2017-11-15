@@ -27,8 +27,7 @@
       <% if current_user %>
       
           <p class="resol">
-            <% if @issue.Status == "Open" || @issue.Status == "New" %> 
-            
+            <% if @issue.Status == "Open" || @issue.Status == "New" %>
               <a class="resolved"> <%= link_to 'Resolve', update_status_url(id: @issue.id, status: "Resolved") %> </a>
             <% else %>
               <%= link_to 'Open', update_status_url(id: @issue.id, status: "Open"), class:'open'%>
@@ -72,58 +71,11 @@
         %></time>
       </div>
 
-<<<<<<< HEAD
       <div class="issue-description">
-        <% if @issue.Description %>
+        <% if !(@issue.Description == "") %>
             <p class="description"><%= @issue.Description %></p>
         <% else %>
             <p class="no-description">No description provided.</p>
-=======
-<h2>Comments</h2>
-<% @issue.comments.each do |comment| %>
-  <div>
-  <p>
-    <strong>Commenter:</strong>
-    <%= comment.user.name %>
-  </p>
- 
-  <p>
-    <strong>Comment:</strong>
-    <%= comment.body %>
-  </p>
-  <%= link_to 'Delete Comment', [comment.issue, comment],
-               method: :delete,
-               data: { confirm: 'Are you sure?' } %>
-  </div>
-  </br>
-<% end %>
- 
-<h2>Add a comment:</h2>
-<%= form_with(model: [ @issue, @issue.comments.build ], local: true) do |form| %>
-  <div class="input-group">
-    <%= form.label :body %>
-    <%= form.text_area :body %>
-  </div>
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
- 
-<p>
-  <% if @issue.Status == "Open" || @issue.Status == "New" %> 
-    <%= link_to 'Resolve', update_status_url(id: @issue.id, status: "Resolved")%>
-  <% else %>
-    <%= link_to 'Open', update_status_url(id: @issue.id, status: "Open")%>
-  <% end %>
-</p>
-<div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Workflow
-    <span class="caret"></span></button>
-    <ul class="dropdown-menu">
-      <% Issue.status.each do |status| %>
-        <% if status != @issue.Status %>
-          <%= content_tag(:li, link_to(status, update_status_url(id: @issue.id, status: status))) %>
->>>>>>> bde20d2db4deab88682d932f04fbd2fce93055e4
         <% end %>
       </div>
     
@@ -166,9 +118,13 @@
           <dl>
             <dt>Assigned to</dt>
             <dd>
-              <a href="/issues?responsible=<%= @issue.assignee.name if !@issue.assignee.nil? %>">
-                <span title="author-name"><%= @issue.assignee.name %></span>
+              <% if !@issue.assignee.nil? %>
+              <a href="/issues?responsible=<%= @issue.assignee.name%>">
+                <span title="author-name"><%= @issue.assignee.name%></span>
               </a>
+              <% else %>
+              No one assigned
+              <% end %>
             </dd>
           </dl>
           
