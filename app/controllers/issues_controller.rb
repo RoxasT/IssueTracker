@@ -9,9 +9,9 @@ class IssuesController < ApplicationController
 
     @issues = Issue.all
 
-    if params.has_key?(:responsible)
-      if User.exists?(nickname: params[:responsible])
-        @issues = @issues.where(assignee_id: User.find_by(nickname: params[:responsible]).id)
+    if params.has_key?(:assignee)
+      if User.exists?(name: params[:assignee])
+        @issues = @issues.where(assignee_id: User.find_by(name: params[:assignee]).id)
       else
         @issues = []
       end
@@ -85,6 +85,50 @@ class IssuesController < ApplicationController
       @issue_to_update = Issue.find(params[:id])
       @issue_to_update.update_attribute("Status", params[:status])
       format.html { redirect_to @issue_to_update }
+    end
+  end
+  
+  def vote
+    respond_to do |format|
+      @issue_to_vote = Issue.find(params[:id])
+      @vote = Vote.new
+      @vote.user_id = current_user.id
+      @vote.issue_id = @issue_to_vote.id
+      @vote.save
+      @issue_to_vote.increment!("Votes")
+      format.html { redirect_to @issue_to_vote}
+    end
+  end
+  
+  def unvote
+    respond_to do |format|
+      @vote = Vote.where(issue_id: params[:id], user_id: current_user.id).take
+      @vote.destroy
+      @issue_to_unvote = Issue.find(params[:id])
+      @issue_to_unvote.decrement!("Votes")
+      format.html { redirect_to @issue_to_unvote}
+    end
+  end
+  
+  def watch
+    respond_to do |format|
+      @issue_to_watch = Issue.find(params[:id])
+      @watcher = Watcher.new
+      @watcher.user_id = current_user.id
+      @watcher.issue_id = @issue_to_watch.id
+      @watcher.save
+      @issue_to_watch.increment!("Watchers")
+      format.html { redirect_to @issue_to_watch}
+    end
+  end
+  
+  def unwatch
+    respond_to do |format|
+      @watcher = Watcher.where(issue_id: params[:id], user_id: current_user.id).take
+      @watcher.destroy
+      @issue_to_unwatch = Issue.find(params[:id])
+      @issue_to_unwatch.decrement!("Watchers")
+      format.html { redirect_to @issue_to_unwatch}
     end
   end
 

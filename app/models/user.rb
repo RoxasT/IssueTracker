@@ -6,7 +6,7 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: [:google_oauth2] 
     has_many :issues
     has_many :comments
-
+    has_many :votes
 
     def self.from_omniauth(access_token)
         data = access_token.info

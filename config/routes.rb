@@ -62,4 +62,8 @@ Rails.application.routes.draw do
   #get '/auth/google_oauth2/callback', to: 'users#auth'
   root 'issues#index'
   get 'update_status' => "issues#update_status"
+  get 'vote_issue' => "issues#vote"
+  get 'unvote_issue' => "issues#unvote"
+  get 'watch_issue' => "issues#watch"
+  get 'unwatch_issue' => "issues#unwatch"
 end
