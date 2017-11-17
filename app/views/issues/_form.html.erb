@@ -24,12 +24,12 @@
 
   <div class="input-group">
     <%= form.label :Type %>
-    <%= form.select :Type, options_for_select([["Please select", ""]]+Issue.type, issue[:Type]),  :class => 'genForm_dropBox' %>
+    <%= form.select :Type, options_for_select(Issue.type, issue[:Type]), prompt: true, :class => 'genForm_dropBox' %>
   </div>
 
   <div class="input-group">
     <%= form.label :Priority %>
-    <%= form.select :Priority, options_for_select([["Please select", ""]]+Issue.priority, issue[:Priority]), :class => 'genForm_dropBox' %>
+    <%= form.select :Priority, options_for_select(Issue.priority, issue[:Priority]), prompt: true, :class => 'genForm_dropBox' %>
   </div>
 
   <div class="input-group">
@@ -39,7 +39,7 @@
 
   <div class="input-group">
     <%= form.label :Assignee %>
-    <%= form.collection_select :assignee_id, User.all, :id, :name, prompt: true %>
+    <%= form.collection_select :assignee_id, User.all, :id, :name, {:include_blank => 'No assigned user'} %>
   </div>
 
   <div class="actions">

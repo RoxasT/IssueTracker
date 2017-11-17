@@ -27,8 +27,7 @@
       <% if current_user %>
       
           <p class="resol">
-            <% if @issue.Status == "Open" || @issue.Status == "New" %> 
-            
+            <% if @issue.Status == "Open" || @issue.Status == "New" %>
               <a class="resolved"> <%= link_to 'Resolve', update_status_url(id: @issue.id, status: "Resolved") %> </a>
             <% else %>
               <%= link_to 'Open', update_status_url(id: @issue.id, status: "Open"), class:'open'%>
@@ -73,7 +72,7 @@
       </div>
 
       <div class="issue-description">
-        <% if @issue.Description %>
+        <% if !(@issue.Description == "") %>
             <p class="description"><%= @issue.Description %></p>
         <% else %>
             <p class="no-description">No description provided.</p>
@@ -120,9 +119,13 @@
           <dl>
             <dt>Assigned to</dt>
             <dd>
-              <a href="/issues?responsible=<%= @issue.assignee.name if !@issue.assignee.nil? %>">
-                <span title="author-name"><%= @issue.assignee.name %></span>
+              <% if !@issue.assignee.nil? %>
+              <a href="/issues?responsible=<%= @issue.assignee.name%>">
+                <span title="author-name"><%= @issue.assignee.name%></span>
               </a>
+              <% else %>
+              No one assigned
+              <% end %>
             </dd>
           </dl>
           
