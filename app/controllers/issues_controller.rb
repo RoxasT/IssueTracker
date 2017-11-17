@@ -118,7 +118,11 @@ class IssuesController < ApplicationController
       @watcher.issue_id = @issue_to_watch.id
       @watcher.save
       @issue_to_watch.increment!("Watchers")
-      format.html { redirect_to @issue_to_watch}
+      if params[:view] == "index"
+        format.html { redirect_to issues_url}
+      else
+        format.html { redirect_to @issue_to_watch}
+      end
     end
   end
   
@@ -128,7 +132,11 @@ class IssuesController < ApplicationController
       @watcher.destroy
       @issue_to_unwatch = Issue.find(params[:id])
       @issue_to_unwatch.decrement!("Watchers")
-      format.html { redirect_to @issue_to_unwatch}
+      if params[:view] == "index"
+        format.html { redirect_to issues_url}
+      else
+        format.html { redirect_to @issue_to_unwatch}
+      end
     end
   end
 

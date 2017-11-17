@@ -52,8 +52,8 @@
     <% if request.query_parameters[:status] %>
         <b>status:</b> "<%= issue.Status[request.query_parameters[:status]] %>"
     <% end %>
-    <% if request.query_parameters[:responsible] %>
-        <b>assignee:</b> "<%= request.query_parameters[:responsible] %>"
+    <% if request.query_parameters[:assignee] %>
+        <b>assignee:</b> "<%= request.query_parameters[:assignee] %>"
     <% end %>
   </p>
 
@@ -85,6 +85,13 @@
             <td><%= issue.user.name %></td>
             <td><%= time_ago_in_words(issue.created_at) + " ago" %></td>
             <td><%= time_ago_in_words(issue.updated_at) + " ago" %></td>
+            <td>
+            <% if !Watcher.exists?(:issue_id => issue.id, :user_id => current_user.id) %>
+                <%= link_to 'Watch', watch_issue_url(id: issue.id, view: "index") %>
+            <% else %>
+                <%= link_to 'Unwatch', unwatch_issue_url(id: issue.id, view: "index") %>
+            <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>
