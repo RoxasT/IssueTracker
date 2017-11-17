@@ -4,9 +4,37 @@ class IssuesController < ApplicationController
 
   # GET /issues
   # GET /issues.json
+  
   def index
+
     @issues = Issue.all
+
+    if params.has_key?(:responsible)
+      if User.exists?(nickname: params[:responsible])
+        @issues = @issues.where(assignee_id: User.find_by(nickname: params[:responsible]).id)
+      else
+        @issues = []
+      end
+    end
+
+    #if params[:watching]
+     # @user = User.find_by(nickname: params[:watching])
+      #@issues = @issues.to_a
+     # if @user.nil?
+      #  @issues.clear
+     # else
+      #  @issues = @issues.select {|i| i.watchers.exists?(@user.id)}
+      #end
+    #end
+
+    respond_to do |format|
+      format.html
+      format.json {render json: @issues, status: :ok, each_serializer: IndexIssueSerializer}
+    end
   end
+  #def index
+   # @issues = Issue.all
+  #end
 
   # GET /issues/1
   # GET /issues/1.json

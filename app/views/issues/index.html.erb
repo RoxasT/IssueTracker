@@ -26,15 +26,15 @@
         </li>
         
         <li id="open" class="aui-button">
-          <a href="#">Open</a>
+          <a href="/issues?status=open">Open</a>
         </li>
       
         <li id="mine" class="aui-button">
-          <a href="#">Assigned</a>
+          <a href="/issues?responsible<%= current_user.name %>">Assigned</a>
         </li>
       
         <li id="watching" class="aui-button">
-          <a href="#">Watching</a>
+          <a href="/issues?watching=<%= current_user.name %>">Watching</a>
         </li>
       </ul>
     </div>
@@ -50,7 +50,7 @@
         <b>priority:</b> "<%= request.query_parameters[:priority] %>"
     <% end %>
     <% if request.query_parameters[:status] %>
-        <b>status:</b> "<%= Issue.statuses[request.query_parameters[:status]] %>"
+        <b>status:</b> "<%= issue.Status[request.query_parameters[:status]] %>"
     <% end %>
     <% if request.query_parameters[:responsible] %>
         <b>assignee:</b> "<%= request.query_parameters[:responsible] %>"

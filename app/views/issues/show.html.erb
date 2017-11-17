@@ -35,7 +35,7 @@
           </p>
           
           <div class="dropdown">
-              <button class="show-button dropdown-toggle" type="button" data-toggle="dropdown">Workflow
+              <button class="show-button dropdown-toggle next-to" type="button" data-toggle="dropdown">Workflow
               <span class="caret"></span></button>
               <ul class="dropdown-menu">
                 <% Issue.status.each do |status| %>
@@ -88,13 +88,11 @@
         
         <% @issue.comments.each do |comment| %>
           <div>
-          <p>
-            <strong>Commenter:</strong>
+          <p class="comenter">
             <%= comment.user.name %>
           </p>
          
-          <p>
-            <strong>Comment:</strong>
+          <p class="coment">
             <%= comment.body %>
           </p>
           <%= link_to 'Delete Comment', [comment.issue, comment],

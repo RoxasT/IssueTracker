@@ -335,6 +335,10 @@ h2 {
       color: #333;
       text-decoration: none;
     }
+    
+    .nex-to {
+       display: inline-block;
+    }
   }
   
   .issue-main-content {
@@ -420,13 +424,15 @@ h2 {
           font-size: 14px;
         }
         
-        .input-group {
-          margin-top: 70px;
-        }
         
         .actions {
           margin-left: 150px;
           width: 150px;
+        }
+        
+        .comenter {
+          color: blue;
+          font-weight:bold;
         }
         
       }
@@ -438,7 +444,7 @@ h2 {
         padding-left: 40px;
         float: right;
         width: 350px;
-        margin-top: -440px;
+        margin-top: -540px;
     
         .issue-attrs {
           border: 1px #ccc solid;
