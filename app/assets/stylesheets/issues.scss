@@ -419,11 +419,20 @@ h2 {
       .issue-attachment {
 
         margin-top: 3px;
-        padding-left: 14px;
+        padding-left: 40px;
 
         .attachment-url {
           color: blue;
           font-weight: bold;
+        }
+
+        .attachment-image {
+
+          img {
+            max-width: 300px;
+            border: 2px solid black;
+            border-radius: 5px;
+          }
         }
 
       }
@@ -445,6 +454,12 @@ h2 {
         .comenter {
           color: blue;
           font-weight:bold;
+        }
+
+        .attachment-image > img {
+          max-width: 300px;
+          border: 2px solid black;
+          border-radius: 5px;
         }
         
       }
