@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20171118173756) do
     t.datetime "updated_at", null: false
     t.integer "Votes", default: 0
     t.string "assignee_id"
+    t.integer "Watchers", default: 0
     t.string "attachment_file_name"
     t.string "attachment_content_type"
     t.integer "attachment_file_size"
@@ -59,6 +60,20 @@ ActiveRecord::Schema.define(version: 20171118173756) do
     t.string "last_sign_in_ip"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "issue_id"
+    t.index ["issue_id"], name: "index_votes_on_issue_id"
+    t.index ["user_id"], name: "index_votes_on_user_id"
+  end
+
+  create_table "watchers", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "issue_id"
+    t.index ["issue_id"], name: "index_watchers_on_issue_id"
+    t.index ["user_id"], name: "index_watchers_on_user_id"
   end
 
 end

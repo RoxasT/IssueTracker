@@ -175,7 +175,7 @@
                   <%= link_to 'Vote for this issue', vote_issue_url(id: @issue.id) %>
                   <% else %>
                   <%= link_to 'Remove vote', unvote_issue_url(id: @issue.id) %>
-                <%# end %>
+                  <% end %>
               </span>
             </dd>
           </dl>
@@ -188,11 +188,12 @@
                   <%= link_to 'Watch this issue', watch_issue_url(id: @issue.id, view: "issue") %>
                   <% else %>
                   <%= link_to 'Stop watching', unwatch_issue_url(id: @issue.id, view: "issue") %>
-                <%# end %>
+                  <% end %>
               </span>
             </dd>
           </dl>
           
+        </div>
       </div>
     </div>
     
@@ -200,21 +201,21 @@
 </div>
 
 <div class="modal fade" id="attachmodal" role="dialog">
-<div class="modal-dialog modal-sm">
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal">&times;</button>
-      <h4 class="modal-title">Attach a file</h4>
-    </div>
-    <div class="modal-body">
-      <%= form_with(model: @issue, local: true) do |form| %>
-        <%= form.file_field :attachment %>
-        <%= form.submit %>
-      <% end %>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Attach a file</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_with(model: @issue, local: true) do |form| %>
+          <%= form.file_field :attachment %>
+          <%= form.submit %>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
-</div>
 </div>
