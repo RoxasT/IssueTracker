@@ -86,11 +86,11 @@
             <td><%= time_ago_in_words(issue.created_at) + " ago" %></td>
             <td><%= time_ago_in_words(issue.updated_at) + " ago" %></td>
             <td>
-            <% if !Watcher.exists?(:issue_id => issue.id, :user_id => current_user.id) %>
-                <%= link_to 'Watch', watch_issue_url(id: issue.id, view: "index") %>
-            <% else %>
-                <%= link_to 'Unwatch', unwatch_issue_url(id: issue.id, view: "index") %>
-            <% end %>
+            <%# if !Watcher.exists?(:issue_id => issue.id, :user_id => current_user.id) %>
+                <%# link_to 'Watch', watch_issue_url(id: issue.id, view: "index") %>
+            <%#else %>
+                <%# link_to 'Unwatch', unwatch_issue_url(id: issue.id, view: "index") %>
+            <%# end %>
             </td>
           </tr>
         <% end %>

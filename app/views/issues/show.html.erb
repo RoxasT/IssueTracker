@@ -94,6 +94,10 @@
          
           <p class="coment">
             <%= comment.body %>
+            </br>
+            <% if comment.attachment.file? %>
+              <%= image_tag comment.attachment.url(:medium) %>
+            <% end %>         
           </p>
           <%= link_to 'Delete Comment', [comment.issue, comment],
                        method: :delete,
@@ -105,6 +109,7 @@
         <%= form_with(model: [@issue, @issue.comments.build], local: true) do |form| %>
           <div class="input-group">
             <%= form.text_area :body, placeholder:'What do you want to say?' %>
+            <%= form.file_field :attachment %>
           </div>
           <div class="actions">
             <%= form.submit %>
@@ -151,12 +156,12 @@
           <dl>
             <dt>Votes</dt>
             <dd class="votes">
-                <%= @issue.Votes %>
-                <% if !Vote.exists?(:issue_id => @issue.id, :user_id => current_user.id) %>
-                <%= link_to 'Vote for this issue', vote_issue_url(id: @issue.id) %>
-                <% else %>
-                <%= link_to 'Remove vote', unvote_issue_url(id: @issue.id) %>
-                <% end %>
+                <%# @issue.Votes %>
+                  <%# if !Vote.exists?(:issue_id => @issue.id, :user_id => current_user.id) %>
+                  <%# link_to 'Vote for this issue', vote_issue_url(id: @issue.id) %>
+                  <%# else %>
+                  <%# link_to 'Remove vote', unvote_issue_url(id: @issue.id) %>
+                <%# end %>
               </span>
             </dd>
           </dl>
@@ -164,12 +169,12 @@
           <dl>
             <dt>Watchers</dt>
             <dd class="watchers">
-                <%= @issue.Watchers %>
-                <% if !Watcher.exists?(:issue_id => @issue.id, :user_id => current_user.id) %>
-                <%= link_to 'Watch this issue', watch_issue_url(id: @issue.id, view: "issue") %>
-                <% else %>
-                <%= link_to 'Stop watching', unwatch_issue_url(id: @issue.id, view: "issue") %>
-                <% end %>
+                <%# @issue.Watchers %>
+                  <%# if !Watcher.exists?(:issue_id => @issue.id, :user_id => current_user.id) %>
+                  <%# link_to 'Watch this issue', watch_issue_url(id: @issue.id, view: "issue") %>
+                  <%# else %>
+                  <%# link_to 'Stop watching', unwatch_issue_url(id: @issue.id, view: "issue") %>
+                <%# end %>
               </span>
             </dd>
           </dl>

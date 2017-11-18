@@ -5,8 +5,9 @@ class Users::SessionsController < Devise::SessionsController
   def new
   #   super
     if !user_signed_in?
-      redirect_to "/users/auth/google_oauth2"
+      redirect_to user_google_oauth2_omniauth_authorize_path      
     end
+
   end
 
   # POST /resource/sign_in
