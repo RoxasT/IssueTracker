@@ -249,6 +249,7 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass (= 3.3.7)
   byebug (= 9.0.6)
+  cloudinary
   coffee-rails (= 4.2.2)
   devise
   jbuilder (= 2.7.0)
