@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: guillemcastro
+  api_key: '443421638655619'
+  api_secret: WX-jWPUdditSpXIKq2wCEYry2Os
+  enhance_image_tag: true
+  static_image_support: false
+production:
+  cloud_name: guillemcastro
+  api_key: '443421638655619'
+  api_secret: WX-jWPUdditSpXIKq2wCEYry2Os
+  enhance_image_tag: true
+  static_image_support: true
+test:
+  cloud_name: guillemcastro
+  api_key: '443421638655619'
+  api_secret: WX-jWPUdditSpXIKq2wCEYry2Os
+  enhance_image_tag: true
+  static_image_support: false

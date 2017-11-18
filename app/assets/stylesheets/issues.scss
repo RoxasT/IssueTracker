@@ -415,6 +415,18 @@ h2 {
         }
         
       }
+
+      .issue-attachment {
+
+        margin-top: 3px;
+        padding-left: 14px;
+
+        .attachment-url {
+          color: blue;
+          font-weight: bold;
+        }
+
+      }
       
       
       .issue-comments-container {

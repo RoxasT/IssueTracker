@@ -46,7 +46,7 @@
               </ul>
           </div>
       
-          <a href="/issues/<%= @issue.id %>/attach" class="show-button">Attach</a>
+          <a href="#" data-toggle="modal" data-target="#attachmodal" class="show-button">Attach</a>
 
           <a href="/issues/<%= @issue.id %>/edit" class="show-button">Edit</a>
             
@@ -78,6 +78,16 @@
             <p class="no-description">No description provided.</p>
 
         <% end %>
+      </div>
+
+      <div class="issue-attachment">
+          <% if @issue.attachment.file? %>
+              <p>Attachment<a class="attachment-url" href=<%= @issue.attachment.url %> > <%=@issue.attachment.original_filename%></a> last updated <%=time_ago_in_words(Time.at(@issue.attachment.updated_at))%></p>
+              <p>Content type <%=@issue.attachment.content_type%></p>
+              <% if @issue.attachment.content_type.include? 'image/' %>
+                <%= image_tag @issue.attachment.url(:thumb) %>
+              <%end%>
+          <% end %>
       </div>
     
       <!-- BLOC ATTACHMENTS -->
@@ -183,4 +193,24 @@
     </div>
     
   </div>
+</div>
+
+<div class="modal fade" id="attachmodal" role="dialog">
+<div class="modal-dialog modal-sm">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">Attach a file</h4>
+    </div>
+    <div class="modal-body">
+      <%= form_with(model: @issue, local: true) do |form| %>
+        <%= form.file_field :attachment %>
+        <%= form.submit %>
+      <% end %>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
 </div>
