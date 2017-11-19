@@ -20,4 +20,6 @@ class Issue < ApplicationRecord
     end
 
     do_not_validate_attachment_file_type :attachment
+    
+    default_scope { order(created_at: :desc) }
 end

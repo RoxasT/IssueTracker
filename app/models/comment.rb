@@ -6,5 +6,7 @@ class Comment < ApplicationRecord
     :path => ':id/:style/:filename',
     :cloudinary_resource_type => :image
 
-  validates_attachment_content_type :attachment, content_type: /\Aimage\/.*\z/  
+  validates_attachment_content_type :attachment, content_type: /\Aimage\/.*\z/
+  
+  default_scope { order(created_at: :asc) }
 end
