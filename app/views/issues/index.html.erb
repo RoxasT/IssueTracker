@@ -30,15 +30,15 @@
         </li>
         
         <li id="open" class="aui-button">
-          <a href="/issues?status=open">Open</a>
+          <a><%= link_to "Open", issues_url(statusOpen: "Open")%></a>
         </li>
       
         <li id="mine" class="aui-button">
-          <a href="/issues?responsible<%= current_user.name %>">Assigned</a>
+          <a><%= link_to "My issues", issues_url(assignee: current_user.id)%></a>
         </li>
       
         <li id="watching" class="aui-button">
-          <a href="/issues?watching=<%= current_user.name %>">Watching</a>
+          <a><%= link_to "Watching", issues_url(watcher: current_user.id)%></a>
         </li>
       </ul>
     </div>
