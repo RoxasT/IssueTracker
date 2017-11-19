@@ -29,6 +29,14 @@ class IssuesController < ApplicationController
       @issues = @issues.where(status: params[:status])
     end
     
+    if params.has_key?(:statusOpen)
+      @issues = @issues.where(status: ["Open","New"])
+    end
+    
+    if params.has_key?(:watcher)
+      @issues = Issue.joins(:watchers).where(watchers:{user_id: current_user.id})
+    end
+    
     
     #@issues = Issue.where(nil) # creates an anonymous scope
     #@issues = @issues.type(params[:type]) if params[:type].present?
