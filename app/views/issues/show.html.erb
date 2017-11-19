@@ -15,7 +15,7 @@
   <br>
   <div class="page-actions2">
     <% if current_user %>
-      <%= button_to issues_url, class: 'back-button' do %>
+      <%= link_to issues_url, class: 'back-button' do %>
         <span class="back-button">Back to all issues</span>
       <% end %>
     <% end %>
@@ -174,6 +174,7 @@
             <dt>Status</dt>
             <dd class="status with-icon">
               <%= @issue.Status %>
+              <%= link_to 'Status', issues_url(id: @issue.id, view: "index_status") %>
             </dd>
           </dl>
           

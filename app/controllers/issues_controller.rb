@@ -6,9 +6,9 @@ class IssuesController < ApplicationController
   # GET /issues.json
   
   def index
-
+    
     @issues = Issue.all
-
+    
     if params.has_key?(:assignee)
       if User.exists?(name: params[:assignee])
         @issues = @issues.where(assignee_id: User.find_by(name: params[:assignee]).id)
@@ -17,7 +17,25 @@ class IssuesController < ApplicationController
       end
     end
     
+    @issues = Issue.where(nil) # creates an anonymous scope
+    @issues = @issues.type(params[:type]) if params[:type].present?
+    @issues = @issues.priority(params[:priority]) if params[:priority].present?
+    
+    respond_to do |format|
+      format.html
+      format.json {render json: @issues, status: :ok, each_serializer: IndexIssueSerializer}
+    end
 
+    #@issues = Issue.all
+
+    #if params.has_key?(:assignee)
+     # if User.exists?(name: params[:assignee])
+      #  @issues = @issues.where(assignee_id: User.find_by(name: params[:assignee]).id)
+      #else
+      #  @issues = []
+      #end
+   # end
+    
     #if params[:watching]
      # @user = User.find_by(nickname: params[:watching])
       #@issues = @issues.to_a
@@ -32,6 +50,41 @@ class IssuesController < ApplicationController
       format.html
       format.json {render json: @issues, status: :ok, each_serializer: IndexIssueSerializer}
     end
+  end
+  
+  def index_status
+    
+    @issues = Issue.where(nil) # creates an anonymous scope
+    @issues = @issues.status(params[:status]) if params[:status].present?
+    
+    respond_to do |format|
+      format.html
+      format.json {render json: @issues, status: :ok, each_serializer: IndexIssueSerializer}
+    end
+  end
+  
+  def index_type
+    
+    @issues = Issue.where(nil) # creates an anonymous scope
+    @issues = @issues.type(params[:type]) if params[:type].present?
+    
+    respond_to do |format|
+      format.html
+      format.json {render json: @issues, status: :ok, each_serializer: IndexIssueSerializer}
+    end
+    
+  end
+  
+  def index_priority
+    
+    @issues = Issue.where(nil) # creates an anonymous scope
+    @issues = @issues.priority(params[:priority]) if params[:priority].present?
+    
+    respond_to do |format|
+      format.html
+      format.json {render json: @issues, status: :ok, each_serializer: IndexIssueSerializer}
+    end
+    
   end
   #def index
    # @issues = Issue.all
