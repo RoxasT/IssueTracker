@@ -12,6 +12,14 @@
       <% end %>
     <% end %>
   </div>
+  <br>
+  <div class="page-actions2">
+    <% if current_user %>
+      <%= button_to issues_url, class: 'back-button' do %>
+        <span class="back-button">Back to all issues</span>
+      <% end %>
+    <% end %>
+  </div>
 </div>
 
 <div class="main-view">

@@ -16,6 +16,7 @@ class IssuesController < ApplicationController
         @issues = []
       end
     end
+    
 
     #if params[:watching]
      # @user = User.find_by(nickname: params[:watching])

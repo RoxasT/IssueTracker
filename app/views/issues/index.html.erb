@@ -75,11 +75,11 @@
     <tbody>
       <tbody>
         <% @issues.each do |issue| %>
-          <tr>
+          <tr><!--@products = Product.status("active").starts_with("Ruby")-->
             <td><%= link_to issue.Title , issue, class:"btn-link" %></td>
-            <td><%= issue.Type %></td>
-            <td><%= issue.Priority %></td>
-            <td><%= issue.Status %></td>
+            <td><%= link_to issue.Type , issues_url, class:"btn-link" %></td>
+            <td><%= link_to issue.Priority , issues_url, class:"btn-link" %></td>
+            <td><%= link_to issue.Status , issues_url, class:"btn-link" %></td>
             <td><%= issue.Votes %></td>
             <td><%= issue.assignee.name  if !issue.assignee.nil? %></td>
             <td><%= issue.user.name %></td>
