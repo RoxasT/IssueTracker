@@ -20,7 +20,4 @@ class Issue < ApplicationRecord
     end
 
     do_not_validate_attachment_file_type :attachment
-    
-    scope :type, -> (type) { where type: type }
-    scope :priority, -> (priority) { where priority: priority }
 end

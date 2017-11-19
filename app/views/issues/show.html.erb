@@ -147,7 +147,7 @@
             <dt>Assigned to</dt>
             <dd>
               <% if !@issue.assignee.nil? %>
-              <a href="/issues?assignee=<%= @issue.assignee.name%>">
+              <a href="/issues?assignee=<%= @issue.assignee.id%>">
                 <span title="assignee"><%= @issue.assignee.name%></span>
               </a>
               <% else %>
@@ -159,22 +159,21 @@
           <dl>
             <dt>Type</dt>
             <dd class="type with-icon">
-              <%= @issue.Type %>
+              <%= link_to @issue.Type, issues_url(type: @issue.Type) %>
             </dd>
           </dl>
           
           <dl>
             <dt>Priority</dt>
             <dd class="priority with-icon">
-              <%= @issue.Priority %>
+              <%= link_to @issue.Priority, issues_url(priority: @issue.Priority) %>
             </dd>
           </dl>
           
           <dl>
             <dt>Status</dt>
             <dd class="status with-icon">
-              <%= @issue.Status %>
-              <%= link_to 'Status', issues_url(id: @issue.id, view: "index_status") %>
+              <%= link_to @issue.Status, issues_url(status: @issue.Status) %>
             </dd>
           </dl>
           

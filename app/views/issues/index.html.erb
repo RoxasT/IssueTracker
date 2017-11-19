@@ -43,8 +43,8 @@
   <h2>Issues (<%= @issues.to_a.size %>)</h2>
 
   <p id="issues-filter-criteria">
-    <% if request.query_parameters[:kind] %>
-      <b>type:</b> "<%= request.query_parameters[:kind] %>"
+    <% if request.query_parameters[:type] %>
+      <b>type:</b> "<%= request.query_parameters[:type] %>"
     <% end %>
     <% if request.query_parameters[:priority] %>
         <b>priority:</b> "<%= request.query_parameters[:priority] %>"
@@ -53,7 +53,7 @@
         <b>status:</b> "<%= request.query_parameters[:status] %>"
     <% end %>
     <% if request.query_parameters[:assignee] %>
-        <b>assignee:</b> "<%= request.query_parameters[:assignee] %>"
+        <b>assignee:</b> "<%= User.find(request.query_parameters[:assignee]).name %>"
     <% end %>
   </p>
 
@@ -66,7 +66,6 @@
           <th scope="col">Status</th>
           <th scope="col">Votes</th>
           <th scope="col">Assignee</th>
-          <th scope="col">Creator</th>
           <th scope="col">Created</th>
           <th scope="col">Updated</th>
           <th colspan="3"></th>
@@ -79,10 +78,13 @@
             <td><%= link_to issue.Title , issue, class:"btn-link" %></td>
             <td><%= link_to issue.Type , issues_url(type: issue.Type), class:"btn-link" %></td>
             <td><%= link_to issue.Priority , issues_url(priority: issue.Priority), class:"btn-link" %></td>
-            <td><%= link_to issue.Status , issues_url, class:"btn-link" %></td>
+            <td><%= link_to issue.Status , issues_url(status: issue.Status), class:"btn-link" %></td>
             <td><%= issue.Votes %></td>
-            <td><%= issue.assignee.name  if !issue.assignee.nil? %></td>
-            <td><%= issue.user.name %></td>
+            <% if !issue.assignee.nil? %>
+            <td><%= link_to issue.assignee.name, issues_url(assignee: issue.assignee.id), class:"btn-link" %></td>
+            <% else %>
+            <td></td>
+            <% end %>
             <td><%= time_ago_in_words(issue.created_at) + " ago" %></td>
             <td><%= time_ago_in_words(issue.updated_at) + " ago" %></td>
             <td>
