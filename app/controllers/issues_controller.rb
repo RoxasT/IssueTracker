@@ -30,7 +30,7 @@ class IssuesController < ApplicationController
     end
     
     if params.has_key?(:statusOpen)
-      @issues = @issues.where(status: ["Open","New"])
+      @issues = @issues.where(Status: ["Open","New"])
     end
     
     if params.has_key?(:watcher)
