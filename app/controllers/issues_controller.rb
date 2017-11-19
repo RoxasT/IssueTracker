@@ -36,31 +36,6 @@ class IssuesController < ApplicationController
     if params.has_key?(:watcher)
       @issues = Issue.joins(:watchers).where(watchers:{user_id: current_user.id})
     end
-    
-    
-    #@issues = Issue.where(nil) # creates an anonymous scope
-    #@issues = @issues.type(params[:type]) if params[:type].present?
-    #@issues = @issues.priority(params[:priority]) if params[:priority].present?
-
-    #@issues = Issue.all
-
-    #if params.has_key?(:assignee)
-     # if User.exists?(name: params[:assignee])
-      #  @issues = @issues.where(assignee_id: User.find_by(name: params[:assignee]).id)
-      #else
-      #  @issues = []
-      #end
-   # end
-    
-    #if params[:watching]
-     # @user = User.find_by(nickname: params[:watching])
-      #@issues = @issues.to_a
-     # if @user.nil?
-      #  @issues.clear
-     # else
-      #  @issues = @issues.select {|i| i.watchers.exists?(@user.id)}
-      #end
-    #end
 
     respond_to do |format|
       format.html
@@ -89,6 +64,11 @@ class IssuesController < ApplicationController
     @issue.user_id = current_user.id
     respond_to do |format|
       if @issue.save
+        @watcher = Watcher.new
+        @watcher.user_id = current_user.id
+        @watcher.issue_id = @issue.id
+        @watcher.save
+        @issue.increment!("Watchers")
         format.html { redirect_to @issue, notice: 'Issue was successfully created.' }
         format.json { render :show, status: :created, location: @issue }
       else
