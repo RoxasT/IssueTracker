@@ -18,15 +18,15 @@ class IssuesController < ApplicationController
     end
     
     if params.has_key?(:type)
-      @issues = @issues.where(type: params[:type])
+      @issues = @issues.where(Type: params[:type])
     end
     
     if params.has_key?(:priority)
-      @issues = @issues.where(priority: params[:priority])
+      @issues = @issues.where(Priority: params[:priority])
     end
     
     if params.has_key?(:status)
-      @issues = @issues.where(status: params[:status])
+      @issues = @issues.where(Status: params[:status])
     end
     
     if params.has_key?(:statusOpen)
