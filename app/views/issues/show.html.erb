@@ -68,12 +68,11 @@
     <div class="issue-info">
 
       <div class="issue-author">
-        <a href="/issues?responsible=<%= @issue.user.name %>">
           
           <!-- AQUI ES POSARIA LA FOTO DE PERFIL --> 
           
-          <span title="author-name"><%= @issue.user.name %></span>
-        </a>
+        <span title="author-name"><b><%= @issue.user.name %></b></span>
+        
         created an issue
         <time class="created_at"><%= @issue.created_at.strftime('%Y-%m-%d')
         %></time>
