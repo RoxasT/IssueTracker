@@ -103,7 +103,7 @@
       
       <div class="issue-comments-container">
         
-        <h2>Comments (<%= @comments.to_a.size %>)</h2>
+        <h2>Comments (<%= @issue.comments.to_a.size %>)</h2>
         
         <% @issue.comments.each do |comment| %>
           <div>
