@@ -7,4 +7,4 @@ Projecte realitzat per:
 * Xavier Campos
 * Carlota Catot Bragós
 
-https://vast-woodland-58426.herokuapp.com
+https://arcane-falls-72768.herokuapp.com
