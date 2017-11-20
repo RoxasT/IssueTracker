@@ -432,50 +432,6 @@ h2 {
 
       }
       
-      
-      .issue-comments-container {
-        
-        h2 {
-          font-size: 20px;
-        }
-        
-        
-        .actions {
-          margin-left: 150px;
-          width: 150px;
-        }
-        
-        .comentari {
-          
-          margin-top:15px;
-          margin-left:15px;
-          
-          .comenter {
-            color: blue;
-            font-weight:bold;
-            
-            .esborrar {
-              color: red;
-            }
-            
-            .esborrar:hover {
-              background:transparent;
-            }
-          }
-          
-        }
-        
-        
-
-        .attachment-image > img {
-          max-width: 300px;
-          border: 2px solid black;
-          border-radius: 5px;
-        }
-        
-      }
-
-  
       .sidebar{
         display: table-cell;
         box-sizing: border-box;
@@ -531,6 +487,49 @@ h2 {
           }
         }
       }
+      
+      
+      .issue-comments-container {
+        
+        h2 {
+          font-size: 20px;
+        }
+        
+        
+        .actions {
+          margin-left: 150px;
+          width: 150px;
+        }
+        
+        .comentari {
+          
+          margin-top:15px;
+          margin-left:15px;
+          
+          .comenter {
+            color: blue;
+            font-weight:bold;
+            
+            .esborrar {
+              color: red;
+            }
+            
+            .esborrar:hover {
+              background:transparent;
+            }
+          }
+          
+        }
+        
+        
+
+        .attachment-image > img {
+          max-width: 300px;
+          border: 2px solid black;
+          border-radius: 5px;
+        }
+        
+      }
     }
   }
 }
@@ -544,6 +543,7 @@ h2 {
   background: transparent;
   text-decoration: underline;
   color: blue;
+  
 }
 
 .numero {

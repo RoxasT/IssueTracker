@@ -10,6 +10,9 @@
         <span class="add-icon">+</span>
         <span class="createi-button">Create issue</span>
       <% end %>
+      <%= link_to issues_url, class: 'create-button' do %>
+        <span class="createi-button">Back</span>
+      <% end %>
     <% end %>
   </div>
 </div>
@@ -25,7 +28,6 @@
     <div class="issue-toolbar">
       
       <% if current_user %>
-          
           
           <div class="dropdown">
             <span style="margin-right:5px; background: #8D8DF4; padding:8px; font-weight: bold">
@@ -62,9 +64,7 @@
     <div class="issue-info">
 
       <div class="issue-author">
-        <a href="/issues?responsible=<%= @issue.user.name %>">
-          <span title="author-name"><%= @issue.user.name %></span>
-        </a>
+        <span title="author-name"><b><%= @issue.user.name %></b></span>
         created an issue <time class="created_at"><%= @issue.created_at.strftime('%Y-%m-%d')%></time>
       </div>
 
@@ -95,7 +95,7 @@
             <dt>Assigned to</dt>
             <dd>
               <% if !@issue.assignee.nil? %>
-              <a href="/issues?assignee=<%= @issue.assignee.name%>">
+              <a href="/issues?assignee=<%= @issue.assignee.id%>">
                 <span title="assignee"><%= @issue.assignee.name%></span>
               </a>
               <% else %>
@@ -107,21 +107,21 @@
           <dl>
             <dt>Type</dt>
             <dd class="type with-icon">
-              <%= @issue.Type %>
+              <%= link_to @issue.Type, issues_url(type: @issue.Type) %>
             </dd>
           </dl>
           
           <dl>
             <dt>Priority</dt>
             <dd class="priority with-icon">
-              <%= @issue.Priority %>
+              <%= link_to @issue.Priority, issues_url(priority: @issue.Priority) %>
             </dd>
           </dl>
           
           <dl>
             <dt>Status</dt>
             <dd class="status with-icon">
-              <%= @issue.Status %>
+              <%= link_to @issue.Status, issues_url(status: @issue.Status) %>
             </dd>
           </dl>
           
@@ -130,9 +130,9 @@
             <dd class="votes">
                 <%= @issue.Votes %>
                   <% if !Vote.exists?(:issue_id => @issue.id, :user_id => current_user.id) %>
-                  <%= link_to 'Vote for this issue', vote_issue_url(id: @issue.id), class:'vote' %>
+                  <%= link_to 'Vote for this issue', vote_issue_url(id: @issue.id), class:"vote" %>
                   <% else %>
-                  <%= link_to 'Remove vote', unvote_issue_url(id: @issue.id), class:'vote' %>
+                  <%= link_to 'Remove vote', unvote_issue_url(id: @issue.id), class:"vote" %>
                   <% end %>
               </span>
             </dd>
@@ -143,9 +143,9 @@
             <dd class="watchers">
                 <%= @issue.Watchers %>
                   <% if !Watcher.exists?(:issue_id => @issue.id, :user_id => current_user.id) %>
-                  <%= link_to 'Watch this issue', watch_issue_url(id: @issue.id, view: "issue"), class:'vote' %>
+                  <%= link_to 'Watch this issue', watch_issue_url(id: @issue.id, view: "issue"), class: "vote" %>
                   <% else %>
-                  <%= link_to 'Stop watching', unwatch_issue_url(id: @issue.id, view: "issue"), class:'vote' %>
+                  <%= link_to 'Stop watching', unwatch_issue_url(id: @issue.id, view: "issue"), class: "vote" %>
                   <% end %>
               </span>
             </dd>
@@ -158,14 +158,13 @@
       
       <div class="issue-comments-container">
         
-        <h2>Comments (<%= @comments.to_a.size %>)</h2>
+        <h2>Comments (<%= @issue.comments.size %>)</h2>
         
         <% @issue.comments.each do |comment| %>
           <div class="comentari">
             
             <p class="comenter">
               <%= comment.user.name %>
-              <span class="esborrar"> <%= link_to 'Delete', [comment.issue, comment], method: :delete, data: { confirm: 'Are you sure?' } %> </span>
             </p>
            
             <p class="coment">
@@ -177,6 +176,13 @@
                 </div>
               <% end %>         
             </p>
+            
+            <%= time_ago_in_words(comment.created_at) + " ago" %>
+              <% if comment.user.id == current_user.id %>
+          |   <%= link_to 'Delete Comment', [comment.issue, comment],
+                       method: :delete,
+                       data: { confirm: 'Are you sure?' } , class: "esborrar" %>
+              <% end %>
             
           </div>
           </br>
