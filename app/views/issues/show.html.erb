@@ -12,14 +12,6 @@
       <% end %>
     <% end %>
   </div>
-  <br>
-  <div class="page-actions2">
-    <% if current_user %>
-      <%= link_to issues_url, class: 'back-button' do %>
-        <span class="back-button">Back to all issues</span>
-      <% end %>
-    <% end %>
-  </div>
 </div>
 
 <div class="main-view">
@@ -33,16 +25,17 @@
     <div class="issue-toolbar">
       
       <% if current_user %>
-      
-          <p class="resol">
-            <% if @issue.Status == "Open" || @issue.Status == "New" %>
-              <a class="resolved"> <%= link_to 'Resolve', update_status_url(id: @issue.id, status: "Resolved") %> </a>
-            <% else %>
-              <%= link_to 'Open', update_status_url(id: @issue.id, status: "Open"), class:'open'%>
-            <% end %>
-          </p>
+          
           
           <div class="dropdown">
+            <span style="margin-right:5px; background: #8D8DF4; padding:8px; font-weight: bold">
+              <% if @issue.Status == "Open" || @issue.Status == "New" %>
+                <a class="resolved"> <%= link_to 'Resolve', update_status_url(id: @issue.id, status: "Resolved") %> </a>
+              <% else %>
+                <%= link_to 'Open', update_status_url(id: @issue.id, status: "Open"), class:'open'%>
+              <% end %>
+            </span>
+            
               <button class="show-button dropdown-toggle next-to" type="button" data-toggle="dropdown">Workflow
               <span class="caret"></span></button>
               <ul class="dropdown-menu">
@@ -52,13 +45,14 @@
                   <% end %>
                 <% end %>
               </ul>
+              <a href="#" data-toggle="modal" data-target="#attachmodal" class="show-button">Attach</a>
+
+              <a href="/issues/<%= @issue.id %>/edit" class="show-button">Edit</a>
+            
+              <%= link_to 'Delete', @issue,  method: :delete, class: 'show-button', data: { confirm: 'Are you sure you want to delete this issue?' } %>
           </div>
       
-          <a href="#" data-toggle="modal" data-target="#attachmodal" class="show-button">Attach</a>
-
-          <a href="/issues/<%= @issue.id %>/edit" class="show-button">Edit</a>
-            
-          <%= link_to 'Delete', @issue,  method: :delete, class: 'show-button', data: { confirm: 'Are you sure you want to delete this issue?' } %>
+          
       <% end %>
     </div>
   </div>
@@ -68,14 +62,10 @@
     <div class="issue-info">
 
       <div class="issue-author">
-          
-          <!-- AQUI ES POSARIA LA FOTO DE PERFIL --> 
-          
-        <span title="author-name"><b><%= @issue.user.name %></b></span>
-        
-        created an issue
-        <time class="created_at"><%= @issue.created_at.strftime('%Y-%m-%d')
-        %></time>
+        <a href="/issues?responsible=<%= @issue.user.name %>">
+          <span title="author-name"><%= @issue.user.name %></span>
+        </a>
+        created an issue <time class="created_at"><%= @issue.created_at.strftime('%Y-%m-%d')%></time>
       </div>
 
       <div class="issue-description">
@@ -83,6 +73,7 @@
             <p class="description"><%= @issue.Description %></p>
         <% else %>
             <p class="no-description">No description provided.</p>
+
         <% end %>
       </div>
 
@@ -97,34 +88,96 @@
               <%end%>
           <% end %>
       </div>
-    
-      <!-- BLOC ATTACHMENTS -->
+      
+      <div class="sidebar">
+        <div class="issue-attrs">
+          <dl>
+            <dt>Assigned to</dt>
+            <dd>
+              <% if !@issue.assignee.nil? %>
+              <a href="/issues?assignee=<%= @issue.assignee.name%>">
+                <span title="assignee"><%= @issue.assignee.name%></span>
+              </a>
+              <% else %>
+              No one assigned
+              <% end %>
+            </dd>
+          </dl>
+          
+          <dl>
+            <dt>Type</dt>
+            <dd class="type with-icon">
+              <%= @issue.Type %>
+            </dd>
+          </dl>
+          
+          <dl>
+            <dt>Priority</dt>
+            <dd class="priority with-icon">
+              <%= @issue.Priority %>
+            </dd>
+          </dl>
+          
+          <dl>
+            <dt>Status</dt>
+            <dd class="status with-icon">
+              <%= @issue.Status %>
+            </dd>
+          </dl>
+          
+          <dl>
+            <dt>Votes</dt>
+            <dd class="votes">
+                <%= @issue.Votes %>
+                  <% if !Vote.exists?(:issue_id => @issue.id, :user_id => current_user.id) %>
+                  <%= link_to 'Vote for this issue', vote_issue_url(id: @issue.id), class:'vote' %>
+                  <% else %>
+                  <%= link_to 'Remove vote', unvote_issue_url(id: @issue.id), class:'vote' %>
+                  <% end %>
+              </span>
+            </dd>
+          </dl>
+          
+          <dl>
+            <dt>Watchers</dt>
+            <dd class="watchers">
+                <%= @issue.Watchers %>
+                  <% if !Watcher.exists?(:issue_id => @issue.id, :user_id => current_user.id) %>
+                  <%= link_to 'Watch this issue', watch_issue_url(id: @issue.id, view: "issue"), class:'vote' %>
+                  <% else %>
+                  <%= link_to 'Stop watching', unwatch_issue_url(id: @issue.id, view: "issue"), class:'vote' %>
+                  <% end %>
+              </span>
+            </dd>
+          </dl>
+          
+        </div>
+      </div>
+      
+      <hr>
       
       <div class="issue-comments-container">
         
-        <h2>Comments (<%= @issue.comments.size %>)</h2>
+        <h2>Comments (<%= @comments.to_a.size %>)</h2>
         
         <% @issue.comments.each do |comment| %>
-          <div>
-          <p class="comenter">
-            <%= comment.user.name %>
-          </p>
-         
-          <p class="coment">
-            <%= comment.body %>
-            </br>
-            <% if comment.attachment.file? %>
-              <div class="attachment-image">
-                <%= image_tag comment.attachment.url(:medium) %>
-              </div>
-            <% end %>         
-          </p>
-          <%= time_ago_in_words(comment.created_at) + " ago" %>
-          <% if comment.user.id == current_user.id %>
-          | <%= link_to 'Delete Comment', [comment.issue, comment],
-                       method: :delete,
-                       data: { confirm: 'Are you sure?' } %>
-          <% end %>
+          <div class="comentari">
+            
+            <p class="comenter">
+              <%= comment.user.name %>
+              <span class="esborrar"> <%= link_to 'Delete', [comment.issue, comment], method: :delete, data: { confirm: 'Are you sure?' } %> </span>
+            </p>
+           
+            <p class="coment">
+              <%= comment.body %>
+              </br>
+              <% if comment.attachment.file? %>
+                <div class="attachment-image">
+                  <%= image_tag comment.attachment.url(:medium) %>
+                </div>
+              <% end %>         
+            </p>
+            
           </div>
           </br>
         <% end %>
@@ -138,71 +191,6 @@
             <%= form.submit %>
           </div>
         <% end %>
-      </div>
-      
-      <div class="sidebar">
-        <div class="issue-attrs">
-          <dl>
-            <dt>Assigned to</dt>
-            <dd>
-              <% if !@issue.assignee.nil? %>
-              <a href="/issues?assignee=<%= @issue.assignee.id%>">
-                <span title="assignee"><%= @issue.assignee.name%></span>
-              </a>
-              <% else %>
-              No one assigned
-              <% end %>
-            </dd>
-          </dl>
-          
-          <dl>
-            <dt>Type</dt>
-            <dd class="type with-icon">
-              <%= link_to @issue.Type, issues_url(type: @issue.Type) %>
-            </dd>
-          </dl>
-          
-          <dl>
-            <dt>Priority</dt>
-            <dd class="priority with-icon">
-              <%= link_to @issue.Priority, issues_url(priority: @issue.Priority) %>
-            </dd>
-          </dl>
-          
-          <dl>
-            <dt>Status</dt>
-            <dd class="status with-icon">
-              <%= link_to @issue.Status, issues_url(status: @issue.Status) %>
-            </dd>
-          </dl>
-          
-          <dl>
-            <dt>Votes</dt>
-            <dd class="votes">
-                <%= @issue.Votes %>
-                  <% if !Vote.exists?(:issue_id => @issue.id, :user_id => current_user.id) %>
-                  <%= link_to 'Vote for this issue', vote_issue_url(id: @issue.id) %>
-                  <% else %>
-                  <%= link_to 'Remove vote', unvote_issue_url(id: @issue.id) %>
-                  <% end %>
-              </span>
-            </dd>
-          </dl>
-          
-          <dl>
-            <dt>Watchers</dt>
-            <dd class="watchers">
-                <%= @issue.Watchers %>
-                  <% if !Watcher.exists?(:issue_id => @issue.id, :user_id => current_user.id) %>
-                  <%= link_to 'Watch this issue', watch_issue_url(id: @issue.id, view: "issue") %>
-                  <% else %>
-                  <%= link_to 'Stop watching', unwatch_issue_url(id: @issue.id, view: "issue") %>
-                  <% end %>
-              </span>
-            </dd>
-          </dl>
-          
-        </div>
       </div>
     </div>
     
