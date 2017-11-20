@@ -64,9 +64,7 @@
     <div class="issue-info">
 
       <div class="issue-author">
-        <a href="/issues?responsible=<%= @issue.user.name %>">
-          <span title="author-name"><%= @issue.user.name %></span>
-        </a>
+        <span title="author-name"><b><%= @issue.user.name %></b></span>
         created an issue <time class="created_at"><%= @issue.created_at.strftime('%Y-%m-%d')%></time>
       </div>
 
@@ -167,7 +165,6 @@
             
             <p class="comenter">
               <%= comment.user.name %>
-              <span class="esborrar"> <%= link_to 'Delete', [comment.issue, comment], method: :delete, data: { confirm: 'Are you sure?' } %> </span>
             </p>
            
             <p class="coment">
@@ -179,6 +176,13 @@
                 </div>
               <% end %>         
             </p>
+            
+            <%= time_ago_in_words(comment.created_at) + " ago" %>
+              <% if comment.user.id == current_user.id %>
+          |   <%= link_to 'Delete Comment', [comment.issue, comment],
+                       method: :delete,
+                       data: { confirm: 'Are you sure?' } , class: "esborrar" %>
+              <% end %>
             
           </div>
           </br>
