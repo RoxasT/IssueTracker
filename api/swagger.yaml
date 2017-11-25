@@ -1,0 +1,92 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Issue Tracker ASW
+host: arcane-falls-72768.herokuapp.com
+paths:
+  /issues:
+    get:
+      tags:
+        - Issues
+      description: Gets `Issue` objects.
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: type
+          description: Gets `Issue` objects by type
+          required: false
+          type: string
+          enum:
+            - Bug
+            - Enhancement
+            - Proposal
+            - Task
+        - in: query
+          name: priority
+          description: Gets `Issue` objects by priority
+          required: false
+          type: string
+          enum:
+            - Trivial
+            - Minor
+            - Major
+            - Critical
+            - Blocker
+        - in: query
+          name: status
+          description: Gets `Issue` objects by status
+          required: false
+          type: string
+          enum:
+            - New
+            - Open
+            - On hold
+            - Resolved
+            - Duplicate
+            - Invalid
+            - Won't fix
+            - Closed
+        - in: query
+          name: assignee
+          description: Gets `Issue` objects by assignee
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            title: ArrayOfIssues
+            type: array
+            items:
+              $ref: '#/definitions/Issue'
+definitions:
+  Issue:
+    type: object
+    properties:
+      title:
+        type: string
+        example: Issue 1
+      type:
+        type: string
+        example: bug
+      priority:
+        type: string
+        example: critical
+      status:
+        type: string
+        example: new
+      assignee:
+        type: string
+        example: Aleix Balletbó
+      votes:
+        type: integer
+        example: 1
+      created_at:
+        type: string
+        format: date
+        example: '2017-11-25T12:18:04.876Z'
+      updated_at:
+        type: string
+        format: date
+        example: '2017-11-25T12:18:04.876Z'
