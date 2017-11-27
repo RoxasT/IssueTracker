@@ -85,6 +85,30 @@ paths:
               $ref: "#/definitions/Issue"
         401:
            $ref: "#/responses/UnauthorizedError"
+
+  /issues/{issue_id}/comments:
+    get:
+      tags:
+        - Comments
+      description: Gets `Comment` objects from Issue
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: issue_id
+          description: ID of an Issue
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Successful response
+          schema:
+            title: ArrayOfComments
+            type: array
+            items:
+              $ref: '#/definitions/Comment'
+        401:
+           $ref: "#/responses/UnauthorizedError"
   
 responses:
   UnauthorizedError:
@@ -123,3 +147,27 @@ definitions:
         type: "string"
         format: "date"
         example: "2017-05-07T18:28:02.933Z"
+  
+  Comment:
+    type: object
+    properties:
+      body:
+        type: string
+        example: This is an example comment
+      issue_id:
+        type: integer
+        example: 10
+      creator_id:
+        type: integer
+        example: 67
+      created_at:
+        type: string
+        format: date
+        example: '2017-11-25T12:18:04.876Z'
+      updated_at:
+        type: string
+        format: date
+        example: '2017-11-25T12:18:04.876Z'
+      attachment_id:
+        type: integer
+        example: 45
