@@ -26,11 +26,11 @@ class IssuesController < ApplicationController
     end
     
     if params.has_key?(:status)
+      if params[:status] == "New&Open"
+        @issues = @issues.where(Status: ["Open","New"])
+      else
       @issues = @issues.where(Status: params[:status])
-    end
-    
-    if params.has_key?(:statusOpen)
-      @issues = @issues.where(Status: ["Open","New"])
+      end
     end
     
     if params.has_key?(:watcher)
@@ -39,7 +39,7 @@ class IssuesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json {render json: @issues, status: :ok, each_serializer: IndexIssueSerializer}
+      format.json {render json: @issues, status: :ok}
     end
   end
 
