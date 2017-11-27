@@ -14,6 +14,7 @@ gem 'bootstrap-sass', '3.3.7'
 gem "paperclip", "~> 5.0.0"
 gem 'cloudinary'
 gem 'paperclip-cloudinary'
+gem 'simple_token_authentication', '~> 1.0' # see semver.org
 
 group :development, :test do
   gem 'sqlite3', '1.3.13'
