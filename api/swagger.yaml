@@ -60,6 +60,28 @@ paths:
             type: array
             items:
               $ref: '#/definitions/Issue'
+  '/issues/{issue_id}/comments':
+    get:
+      tags:
+        - Issues
+        - Comments
+      description: Gets `Comment` objects from Issue
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: issue_id
+          description: ID of an Issue
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            title: ArrayOfComments
+            type: array
+            items:
+              $ref: '#/definitions/Comment'
 definitions:
   Issue:
     type: object
@@ -90,3 +112,26 @@ definitions:
         type: string
         format: date
         example: '2017-11-25T12:18:04.876Z'
+  Comment:
+    type: object
+    properties:
+      body:
+        type: string
+        example: This is an example comment
+      issue_id:
+        type: integer
+        example: 10
+      creator_id:
+        type: integer
+        example: 67
+      created_at:
+        type: string
+        format: date
+        example: '2017-11-25T12:18:04.876Z'
+      updated_at:
+        type: string
+        format: date
+        example: '2017-11-25T12:18:04.876Z'
+      attachment_id:
+        type: integer
+        example: 45

@@ -1,4 +1,5 @@
 class IssuesController < ApplicationController
+  acts_as_token_authentication_handler_for User
   before_action :set_issue, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
@@ -39,7 +40,7 @@ class IssuesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json {render json: @issues, status: :ok, each_serializer: IndexIssueSerializer}
+      format.json {render json: @issues, status: :ok}
     end
   end
 

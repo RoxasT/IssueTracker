@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  acts_as_token_authentication_handler_for User
 	def create
     @comment = Comment.new(comment_params)
     @issue = Issue.find(params[:issue_id])

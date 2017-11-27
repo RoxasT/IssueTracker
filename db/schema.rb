@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171118173756) do
+ActiveRecord::Schema.define(version: 20171127095257) do
 
   create_table "comments", force: :cascade do |t|
     t.text "body"
@@ -37,11 +37,11 @@ ActiveRecord::Schema.define(version: 20171118173756) do
     t.datetime "updated_at", null: false
     t.integer "Votes", default: 0
     t.string "assignee_id"
+    t.integer "Watchers", default: 0
     t.string "attachment_file_name"
     t.string "attachment_content_type"
     t.integer "attachment_file_size"
     t.datetime "attachment_updated_at"
-    t.integer "Watchers", default: 0
   end
 
   create_table "users", force: :cascade do |t|
@@ -58,6 +58,8 @@ ActiveRecord::Schema.define(version: 20171118173756) do
     t.datetime "last_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
+    t.string "authentication_token", limit: 30
+    t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
