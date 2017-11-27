@@ -1,137 +1,125 @@
 swagger: '2.0'
+
+# This is your document metadata
 info:
-  version: 1.0.0
+  version: "1.0.0"
   title: Issue Tracker ASW
 host: arcane-falls-72768.herokuapp.com
+
+securityDefinitions:
+   # X-API-Key: abcdef12345
+   APIKeyHeader:
+     type: apiKey
+     in: header
+     name: X-API-Key
+
+security:
+  - APIKeyHeader: []
+
+# Describe your paths here
 paths:
+  
   /issues:
     get:
       tags:
         - Issues
-      description: Gets `Issue` objects.
+      description:
+        Gets `Issue` objects.
       produces:
-        - application/json
+        - "application/json"
+      # This is array of GET operation parameters:
       parameters:
-        - in: query
-          name: type
-          description: Gets `Issue` objects by type
-          required: false
-          type: string
-          enum:
-            - Bug
-            - Enhancement
-            - Proposal
-            - Task
-        - in: query
-          name: priority
-          description: Gets `Issue` objects by priority
-          required: false
-          type: string
-          enum:
-            - Trivial
-            - Minor
-            - Major
-            - Critical
-            - Blocker
-        - in: query
-          name: status
-          description: Gets `Issue` objects by status
-          required: false
-          type: string
-          enum:
-            - New
-            - Open
-            - On hold
-            - Resolved
-            - Duplicate
-            - Invalid
-            - Won't fix
-            - Closed
-        - in: query
-          name: assignee
-          description: Gets `Issue` objects by assignee
-          required: false
-          type: string
+      - in: "query"
+        name: "type"
+        description: "Gets `Issue` objects by type"
+        required: false
+        type: "string"
+        enum:
+        - "Bug"
+        - "Enhancement"
+        - "Proposal"
+        - "Task"
+      - in: "query"
+        name: "priority"
+        description: "Gets `Issue` objects by priority"
+        required: false
+        type: "string"
+        enum:
+        - "Trivial"
+        - "Minor"
+        - "Major"
+        - "Critical"
+        - "Blocker"
+      - in: "query"
+        name: "status"
+        description: "Gets `Issue` objects by status"
+        required: false
+        type: "string"
+        enum:
+        - "New"
+        - "Open"
+        - "On hold"
+        - "Resolved"
+        - "Duplicate"
+        - "Invalid"
+        - "Won't fix"
+        - "Closed"
+        - "New&Open"
+      - in: "query"
+        name: "assignee"
+        description: "Gets `Issue` objects by assignee"
+        required: false
+        type: "string"
+        
+      # Expected responses for this operation:
       responses:
-        '200':
+        # Response code
+        200:
           description: Successful response
+          # A schema describing your response object.
+          # Use JSON Schema format
           schema:
             title: ArrayOfIssues
             type: array
             items:
-              $ref: '#/definitions/Issue'
-  '/issues/{issue_id}/comments':
-    get:
-      tags:
-        - Issues
-        - Comments
-      description: Gets `Comment` objects from Issue
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: issue_id
-          description: ID of an Issue
-          required: true
-          type: integer
-      responses:
-        '200':
-          description: Successful response
-          schema:
-            title: ArrayOfComments
-            type: array
-            items:
-              $ref: '#/definitions/Comment'
+              $ref: "#/definitions/Issue"
+        401:
+           $ref: "#/responses/UnauthorizedError"
+  
+responses:
+  UnauthorizedError:
+    description: API key is missing or invalid
+    headers:
+      WWW_Authenticate:
+        type: string
+  
 definitions:
   Issue:
-    type: object
+    type: "object"
     properties:
       title:
-        type: string
-        example: Issue 1
+        type: "string"
+        example: "Issue 1"
       type:
-        type: string
-        example: bug
+        type: "string"
+        example: "bug"
       priority:
-        type: string
-        example: critical
+        type: "string"
+        example: "critical"
       status:
-        type: string
-        example: new
+        type: "string"
+        example: "new"
       assignee:
-        type: string
-        example: Aleix Balletbó
+        type: "string"
+        example: "Aleix Balletbó"
       votes:
-        type: integer
+        type: "integer"
         example: 1
       created_at:
-        type: string
-        format: date
-        example: '2017-11-25T12:18:04.876Z'
+        type: "string"
+        format: "date"
+        example: "2017-05-07T18:28:01.933Z"
       updated_at:
-        type: string
-        format: date
-        example: '2017-11-25T12:18:04.876Z'
-  Comment:
-    type: object
-    properties:
-      body:
-        type: string
-        example: This is an example comment
-      issue_id:
-        type: integer
-        example: 10
-      creator_id:
-        type: integer
-        example: 67
-      created_at:
-        type: string
-        format: date
-        example: '2017-11-25T12:18:04.876Z'
-      updated_at:
-        type: string
-        format: date
-        example: '2017-11-25T12:18:04.876Z'
-      attachment_id:
-        type: integer
-        example: 45
+        type: "string"
+        format: "date"
+        example: "2017-05-07T18:28:02.933Z"
