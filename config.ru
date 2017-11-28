@@ -4,7 +4,7 @@ require ::File.expand_path('../config/environment', __FILE__)
 
 use Rack::Cors do
   allow do
-    origins 'editor.swagger.io'
+    origins '*'
     resource '*',
         :headers => :any,
         :methods => [:get, :post, :put, :patch, :delete, :options, :head]

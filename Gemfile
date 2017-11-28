@@ -15,7 +15,7 @@ gem "paperclip", "~> 5.0.0"
 gem 'cloudinary'
 gem 'paperclip-cloudinary'
 gem 'simple_token_authentication', '~> 1.0' # see semver.org
-gem 'rack-cors'
+gem 'rack-cors', :require => 'rack/cors'
 
 group :development, :test do
   gem 'sqlite3', '1.3.13'
