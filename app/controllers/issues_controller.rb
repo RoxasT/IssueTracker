@@ -40,7 +40,7 @@ class IssuesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json {render json: @issues, status: :ok}
+      format.json {render json: @issues, status: :ok, each_serializer: IssueSerializer}
     end
   end
 
