@@ -4,7 +4,7 @@ class IssueSerializer < ActiveModel::Serializer
     def _links
         links = {
             self: { href: "/issues/#{object.id}" },
-            creator: object.user_id.as_json_summary,
+            creator: { href: "/users/#{object.user_id}" },
         }
     end
     
