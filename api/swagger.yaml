@@ -90,6 +90,113 @@ paths:
               $ref: "#/definitions/Issue"
         401:
            $ref: "#/responses/UnauthorizedError"
+  
+  '/issues/{issue_id}':
+    delete:
+      tags:
+        - Issues
+      description: Delete a `Issue` object
+      produces: 
+        - application/json
+      parameters: 
+        - in: path
+          name: issue_id
+          description: ID of an Issue
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+        401:
+          $ref: '#/responses/UnauthorizedError'
+        404:
+          $ref: '#/responses/NotFound'
+        403:
+          description: You can't delete an Issue created by other users
+          
+  '/issues/{issue_id}/edit':
+    put:
+      tags:
+        - Issues
+      description: Update an `Issue` object
+      consumes: 
+        - application/x-www-form-urlencoded
+      produces: 
+        - application/json
+      parameters: 
+        - in: path
+          name: issue_id
+          description: ID of an Issue
+          required: true
+          type: integer
+        - in: formData
+          name: title
+          type: string
+          description: Title of the issue
+        - in: formData
+          name: status
+          type: string
+          description: Status of the issue
+        - in: formData
+          name: priority
+          type: string
+          description: Priority of the issue
+        - in: formData
+          name: type
+          type: string
+          description: Type of the issue
+        - in: formData
+          name: assignee
+          type: string
+          description: Assignee of the issue
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+        401:
+          $ref: '#/responses/UnauthorizedError'
+        404:
+          $ref: '#/responses/NotFound'
+          
+  /issues/new:
+    post:
+      tags: 
+        - Issues
+      description: Creates a new `Issue` Object
+      consumes: 
+        - application/x-www-form-urlencoded
+      parameters: 
+        - in: formData
+          name: title
+          type: string
+          description: Title of the issue
+        - in: formData
+          name: status
+          type: string
+          description: Status of the issue
+        - in: formData
+          name: priority
+          type: string
+          description: Priority of the issue
+        - in: formData
+          name: type
+          type: string
+          description: Type of the issue
+        - in: formData
+          name: assignee
+          type: string
+          description: Assignee of the issue
+            
+      responses:
+        201:
+          description: Created
+          schema:
+            $ref: '#/definitions/Issue'
+        401:
+          $ref: "#/responses/UnauthorizedError"
 
   /issues/{issue_id}/comments:
     get:
