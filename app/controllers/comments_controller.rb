@@ -38,7 +38,7 @@ class CommentsController < ApplicationController
     end
     respond_to do |format|
       if @comment.user_id == current_user.id
-        format.json {render json: @comment, status: :ok}
+        format.json {render json: {}, status: :ok}
         format.html {redirect_to issue_path(@issue)}
       else
         format.json {render json: {error: "Forbidden, you are not the creator of this comment"}, status: :forbidden}
