@@ -114,6 +114,124 @@ paths:
               $ref: '#/definitions/Comment'
         401:
            $ref: "#/responses/UnauthorizedError"
+    
+    post:
+      tags: 
+        - Comments
+      description: Creates a new `Comment` for a Issue
+      consumes: 
+        - application/x-www-form-urlencoded
+      parameters: 
+        - in: path
+          name: issue_id
+          description: ID of an Issue
+          required: true
+          type: integer
+        - in: formData
+          name: body
+          type: string
+          description: Text of the comment
+            
+      responses:
+        201:
+          description: Created
+          schema:
+            $ref: '#/definitions/Comment'
+        401:
+          $ref: "#/responses/UnauthorizedError"
+    
+  
+  /issues/{issue_id}/comments/{comment_id}:
+    get:
+      tags:
+        - Comments
+      description: Get a `Comment` object from Issue
+      produces: 
+        - application/json
+      parameters: 
+        - in: path
+          name: issue_id
+          description: ID of an Issue
+          required: true
+          type: integer
+        - in: path
+          name: comment_id
+          description: ID of a Comment
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Comment'
+        401:
+          $ref: '#/responses/UnauthorizedError'
+        404:
+          $ref: '#/responses/NotFound'
+          
+    put:
+      tags:
+        - Comments
+      description: Update a `Comment` object
+      consumes: 
+        - application/x-www-form-urlencoded
+      produces: 
+        - application/json
+      parameters: 
+        - in: path
+          name: issue_id
+          description: ID of an Issue
+          required: true
+          type: integer
+        - in: path
+          name: comment_id
+          description: ID of a Comment
+          required: true
+          type: integer
+        - in: formData
+          name: body
+          type: string
+          description: Text of the Comment
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+        401:
+          $ref: '#/responses/UnauthorizedError'
+        404:
+          $ref: '#/responses/NotFound'
+        403:
+          description: You can't edit a Comment created by other users
+          
+    delete:
+      tags:
+        - Comments
+      description: Delete a `Comment` object
+      produces: 
+        - application/json
+      parameters: 
+        - in: path
+          name: issue_id
+          description: ID of an Issue
+          required: true
+          type: integer
+        - in: path
+          name: comment_id
+          description: ID of a Comment
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+        401:
+          $ref: '#/responses/UnauthorizedError'
+        404:
+          $ref: '#/responses/NotFound'
+        403:
+          description: You can't delete a Comment created by other users
   
 responses:
   UnauthorizedError:
@@ -121,6 +239,8 @@ responses:
     headers:
       WWW_Authenticate:
         type: string
+  NotFound:
+    description: Resource not found
   
 definitions:
   Issue:
@@ -187,7 +307,7 @@ definitions:
       issue_id:
         type: integer
         example: 10
-      creator_id:
+      user_id:
         type: integer
         example: 67
       created_at:
