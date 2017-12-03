@@ -69,7 +69,12 @@ paths:
         name: "assignee"
         description: "Gets `Issue` objects by assignee"
         required: false
-        type: "string"
+        type: "integer"
+      - in: "query"
+        name: "watcher"
+        description: "Gets `Issue` objects watched by a user"
+        required: false
+        type: "integer"
         
       # Expected responses for this operation:
       responses:
@@ -121,29 +126,54 @@ definitions:
   Issue:
     type: "object"
     properties:
-      title:
+      id:
+        type: "integer"
+        example: "1"
+      Title:
         type: "string"
         example: "Issue 1"
-      type:
+      Description:
         type: "string"
-        example: "bug"
-      priority:
+        example: "description"
+      Type:
         type: "string"
-        example: "critical"
-      status:
+        example: "Bug"
+      Priority:
         type: "string"
-        example: "new"
-      assignee:
+        example: "Critical"
+      Status:
         type: "string"
-        example: "Aleix Balletbó"
-      votes:
+        example: "New"
+      user_id:
         type: "integer"
-        example: 1
+        example: "1"
       created_at:
         type: "string"
         format: "date"
         example: "2017-05-07T18:28:01.933Z"
       updated_at:
+        type: "string"
+        format: "date"
+        example: "2017-05-07T18:28:02.933Z"
+      Votes:
+        type: "integer"
+        example: 1
+      assignee_id:
+        type: "integer"
+        example: "1"
+      Watchers:
+        type: "integer"
+        example: "1"
+      attachment_file_name:
+        type: "string"
+        example: "attachment.png"
+      attachment_content_type:
+        type: "string"
+        example: "image/png"
+      attachment_file_size:
+        type: "integer"
+        example: "100"
+      attachment_updated_at:
         type: "string"
         format: "date"
         example: "2017-05-07T18:28:02.933Z"
