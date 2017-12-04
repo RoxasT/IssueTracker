@@ -130,9 +130,9 @@
             <dd class="votes">
                 <%= @issue.Votes %>
                   <% if !Vote.exists?(:issue_id => @issue.id, :user_id => current_user.id) %>
-                  <%= link_to 'Vote for this issue', vote_issue_url(id: @issue.id), class:"vote" %>
+                  <%= link_to 'Vote for this issue', vote_url(id: @issue.id), class:"vote" %>
                   <% else %>
-                  <%= link_to 'Remove vote', unvote_issue_url(id: @issue.id), class:"vote" %>
+                  <%= link_to 'Remove vote', vote_url(id: @issue.id), class:"vote" %>
                   <% end %>
               </span>
             </dd>

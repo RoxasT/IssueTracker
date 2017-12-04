@@ -101,27 +101,7 @@ class IssuesController < ApplicationController
     end
   end
   
-  def vote
-    respond_to do |format|
-      @issue_to_vote = Issue.find(params[:id])
-      @vote = Vote.new
-      @vote.user_id = current_user.id
-      @vote.issue_id = @issue_to_vote.id
-      @vote.save
-      @issue_to_vote.increment!("Votes")
-      format.html { redirect_to @issue_to_vote}
-    end
-  end
   
-  def unvote
-    respond_to do |format|
-      @vote = Vote.where(issue_id: params[:id], user_id: current_user.id).take
-      @vote.destroy
-      @issue_to_unvote = Issue.find(params[:id])
-      @issue_to_unvote.decrement!("Votes")
-      format.html { redirect_to @issue_to_unvote}
-    end
-  end
   
   def watch
     respond_to do |format|
@@ -136,6 +116,25 @@ class IssuesController < ApplicationController
       else
         format.html { redirect_to @issue_to_watch}
       end
+    end
+  end
+  
+  def vote
+    respond_to do |format|
+      @issue_to_vote = Issue.find(params[:id])
+      if !Vote.exists?(:issue_id => @issue_to_vote.id, :user_id => current_user.id)
+        @vote = Vote.new
+        @vote.user_id = current_user.id
+        @vote.issue_id = @issue_to_vote.id
+        @vote.save
+        @issue_to_vote.increment!("Votes")
+      else
+        @vote = Vote.where(issue_id: params[:id], user_id: current_user.id).take
+        @vote.destroy
+        @issue_to_vote.decrement!("Votes")
+      end
+      format.html { redirect_to @issue_to_vote }
+      format.json { render json: @issue_to_vote, status: :ok }
     end
   end
   
@@ -162,11 +161,27 @@ class IssuesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  #POST /issues/{issues_id}/vote
+  def create
+    if @issue.votes.exists?(current_user.id)
+      @issue.votes.delete(current_user)
+      message = 'Issue unvoted'
+    else
+      @issue.votes << current_user
+      message = 'Issue voted'
+    end
+    respond_to do |format|
+      format.html { redirect_to "/issues/{ @issue.id }" }
+      format.json { render json: { message: message }, status: :ok }
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_issue
       @issue = Issue.find(params[:id])
+      render json: { error: 'Issue not found' }, status: :not_found if @issue.nil?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
