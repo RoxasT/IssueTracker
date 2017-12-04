@@ -75,7 +75,24 @@ class CommentsController < ApplicationController
   end
 
   def create_attachment
-
+    @issue = Issue.find(params[:issue_id])
+    @comment = @issue.comments.find(params[:id])
+    if @comment.user_id == current_user.id
+      @comment.attachment = Paperclip.io_adapters.for(params[:file])
+      if params[:filename]
+        @comment.attachment.instance_write(:file_name, params[:filename])
+      else
+        @comment.attachment.instance_write(:file_name, SecureRandom.hex(10))
+      end
+      @comment.save
+    end
+    respond_to do |format|
+      if @comment.user_id == current_user.id
+        format.json {render json: @comment, status: :created, serializer: AttachmentSerializer}
+      else
+        format.json {render json: {error: "Forbidden, you are not the creator of this comment"}, status: :forbidden}
+      end        
+    end
   end
  
   private

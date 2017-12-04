@@ -37,11 +37,11 @@ ActiveRecord::Schema.define(version: 20171127095257) do
     t.datetime "updated_at", null: false
     t.integer "Votes", default: 0
     t.string "assignee_id"
+    t.integer "Watchers", default: 0
     t.string "attachment_file_name"
     t.string "attachment_content_type"
     t.integer "attachment_file_size"
     t.datetime "attachment_updated_at"
-    t.integer "Watchers", default: 0
   end
 
   create_table "users", force: :cascade do |t|
