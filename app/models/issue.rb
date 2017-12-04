@@ -4,7 +4,7 @@ class Issue < ApplicationRecord
     has_many :comments, dependent: :destroy
     has_many :votes, dependent: :destroy
     has_many :watchers, dependent: :destroy
-    validates :Title, :Type, :Priority, :Status, presence: true
+    validates :Title, :IssueID, :Type, :Priority, :Status, presence: true
     has_attached_file :attachment, styles: { medium: "300x300>", thumb: "100x100>" },
         :storage => :cloudinary,
         :path => ':id/:filename',
