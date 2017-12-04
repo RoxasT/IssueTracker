@@ -161,21 +161,6 @@ class IssuesController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
-  #POST /issues/{issues_id}/vote
-  def create
-    if @issue.votes.exists?(current_user.id)
-      @issue.votes.delete(current_user)
-      message = 'Issue unvoted'
-    else
-      @issue.votes << current_user
-      message = 'Issue voted'
-    end
-    respond_to do |format|
-      format.html { redirect_to "/issues/{ @issue.id }" }
-      format.json { render json: { message: message }, status: :ok }
-    end
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
