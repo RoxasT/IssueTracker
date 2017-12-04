@@ -4,7 +4,7 @@ swagger: '2.0'
 info:
   version: "1.0.0"
   title: Issue Tracker ASW
-host: localhost:3000
+host: arcane-falls-72768.herokuapp.com
 
 securityDefinitions:
    # X-User-Token Aleix: itZhA1GN8j_szrA7BG7_
