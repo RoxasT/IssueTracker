@@ -4,7 +4,7 @@ swagger: '2.0'
 info:
   version: "1.0.0"
   title: Issue Tracker ASW
-host: arcane-falls-72768.herokuapp.com
+host: localhost:3000
 
 securityDefinitions:
    # X-User-Token Aleix: itZhA1GN8j_szrA7BG7_
@@ -339,6 +339,74 @@ paths:
           $ref: '#/responses/NotFound'
         403:
           description: You can't delete a Comment created by other users
+          
+  /issues/{issue_id}/comments/{comment_id}/attachment:
+    get:
+      tags: 
+        - Attachments
+      description: Get a an Attachment from a Comment
+      produces: 
+        - application/json
+      parameters: 
+        - in: path
+          name: issue_id
+          description: ID of an Issue
+          required: true
+          type: integer
+        - in: path
+          name: comment_id
+          description: ID of a Comment
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/Attachment'
+        404:
+          description: This comment has no attachments
+        401:
+          $ref: '#/responses/UnauthorizedError'
+    post:
+      tags:
+        - Attachments
+      description: Attach an image to a Comment
+      produces:
+        - application/json
+      consumes: 
+        - application/x-www-form-urlencoded
+      parameters: 
+        - in: path
+          name: issue_id
+          description: ID of an Issue
+          required: true
+          type: integer
+        - in: path
+          name: comment_id
+          description: ID of a Comment
+          required: true
+          type: integer
+        - in: formData
+          name: file
+          description: Image file encoded in base64
+          type: string
+          format: base64
+          required: true
+        - in: formData
+          name: filename
+          type: string
+          description: Original filename of the image
+          required: false
+      responses:
+        201:
+          description: Created
+          schema:
+            $ref: '#/definitions/Attachment'
+        401:
+          $ref: '#/responses/UnauthorizedError'
+        403:
+          description: You can't attach an image to a comment of other users
+            
   
 responses:
   UnauthorizedError:
@@ -428,3 +496,44 @@ definitions:
       attachment_id:
         type: integer
         example: 45
+        
+  Attachment:
+    type: object
+    properties:
+      attachment_content_type:
+        type: string
+        example: image/jpeg
+      attachment_file_name:
+        type: string
+        example: image.jpg
+      attachment_file_size:
+        type: integer
+        example: 2673366
+      attachment_updated_at:
+        type: string
+        format: date
+        example: "2017-12-04T10:22:10.641Z"
+      url:
+        type: string
+        example: http://example.com/image.jpg
+      _links:
+        type: object
+        properties:
+          comment:
+            type: object
+            properties:
+              href:
+                type: string
+                example: /issues/1/comments/21
+          self:
+            type: object
+            properties:
+              href:
+                type: string
+                example: /issues/1/comments/21/attachment
+          creator:
+            type: object
+            properties:
+              href:
+                type: string
+                example: /users/1
