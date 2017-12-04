@@ -66,4 +66,6 @@ Rails.application.routes.draw do
   get 'unvote_issue' => "issues#unvote"
   get 'watch_issue' => "issues#watch"
   get 'unwatch_issue' => "issues#unwatch"
+  get '/issues/:issue_id/comments/:id/attachment' => "comments#show_attachment"
+  post '/issues/:issue_id/comments/:id/attachment' => "comments#create_attachment"
 end
