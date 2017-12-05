@@ -406,6 +406,58 @@ paths:
           $ref: '#/responses/UnauthorizedError'
         403:
           description: You can't attach an image to a comment of other users
+          
+  '/issues/{issue_id}/vote':
+    post:
+      tags:
+        - Issues
+      description: Votes or unvotes the isseue with the ID issue_id as the current authenticated user
+      parameters:
+        - in: path
+          name: issue_id
+          description: ID of the issue to vote/unvote
+          required: true
+          type: integer
+      
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Issue voted"
+        '401':
+          $ref: '#/responses/UnauthorizedError'
+        '404':
+          $ref: '#/responses/NotFound'
+
+  '/issues/{issue_id}/watch':
+    post:
+      tags:
+        - Issues
+      description: Watch or unwatch the isseue with the ID issue_id as the current authenticated user
+      parameters:
+        - in: path
+          name: issue_id
+          description: ID of the issue to watch/unwatch
+          required: true
+          type: integer
+      
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Issue watched"
+        '401':
+          $ref: '#/responses/UnauthorizedError'
+        '404':
+          $ref: '#/responses/NotFound'
             
   
 responses:

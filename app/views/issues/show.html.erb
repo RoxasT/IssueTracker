@@ -143,9 +143,9 @@
             <dd class="watchers">
                 <%= @issue.Watchers %>
                   <% if !Watcher.exists?(:issue_id => @issue.id, :user_id => current_user.id) %>
-                  <%= link_to 'Watch this issue', watch_issue_url(id: @issue.id, view: "issue"), class: "vote" %>
+                  <%= link_to 'Watch this issue', watch_url(id: @issue.id, view: "issue"), class: "vote" %>
                   <% else %>
-                  <%= link_to 'Stop watching', unwatch_issue_url(id: @issue.id, view: "issue"), class: "vote" %>
+                  <%= link_to 'Stop watching', watch_url(id: @issue.id, view: "issue"), class: "vote" %>
                   <% end %>
               </span>
             </dd>

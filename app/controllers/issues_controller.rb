@@ -102,15 +102,22 @@ class IssuesController < ApplicationController
   end
   
   
+  # POST /issues/{issue_id}/watch
   
   def watch
     respond_to do |format|
       @issue_to_watch = Issue.find(params[:id])
-      @watcher = Watcher.new
-      @watcher.user_id = current_user.id
-      @watcher.issue_id = @issue_to_watch.id
-      @watcher.save
-      @issue_to_watch.increment!("Watchers")
+      if !Watcher.exists?(:issue_id => @issue_to_watch.id, :user_id => current_user.id)
+        @watcher = Watcher.new
+        @watcher.user_id = current_user.id
+        @watcher.issue_id = @issue_to_watch.id
+        @watcher.save
+        @issue_to_watch.increment!("Watchers")
+      else
+        @watcher = Watcher.where(issue_id: params[:id], user_id: current_user.id).take
+        @watcher.destroy
+        @issue_to_watch.decrement!("Watchers")
+      end
       if params[:view] == "index"
         format.html { redirect_to issues_url}
       else
@@ -118,6 +125,9 @@ class IssuesController < ApplicationController
       end
     end
   end
+  
+  
+  # POST /issues/{issue_id}/vote
   
   def vote
     respond_to do |format|
