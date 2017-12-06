@@ -48,6 +48,10 @@ class IssuesController < ApplicationController
   # GET /issues/1
   # GET /issues/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.json {render json: @issues, status: :ok, serializer: IssueSerializer}
+    end
   end
 
   # GET /issues/new
