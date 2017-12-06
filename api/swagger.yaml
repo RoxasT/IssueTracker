@@ -87,81 +87,10 @@ paths:
             title: ArrayOfIssues
             type: array
             items:
-              $ref: "#/definitions/Issue"
+              $ref: "#/definitions/IssueIndex"
         401:
            $ref: "#/responses/UnauthorizedError"
-  
-  '/issues/{issue_id}':
-    delete:
-      tags:
-        - Issues
-      description: Delete a `Issue` object
-      produces: 
-        - application/json
-      parameters: 
-        - in: path
-          name: issue_id
-          description: ID of an Issue
-          required: true
-          type: integer
-      responses:
-        200:
-          description: Success
-          schema:
-            type: object
-        401:
-          $ref: '#/responses/UnauthorizedError'
-        404:
-          $ref: '#/responses/NotFound'
-        403:
-          description: You can't delete an Issue created by other users
-          
-  '/issues/{issue_id}/edit':
-    put:
-      tags:
-        - Issues
-      description: Update an `Issue` object
-      consumes: 
-        - application/x-www-form-urlencoded
-      produces: 
-        - application/json
-      parameters: 
-        - in: path
-          name: issue_id
-          description: ID of an Issue
-          required: true
-          type: integer
-        - in: formData
-          name: title
-          type: string
-          description: Title of the issue
-        - in: formData
-          name: status
-          type: string
-          description: Status of the issue
-        - in: formData
-          name: priority
-          type: string
-          description: Priority of the issue
-        - in: formData
-          name: type
-          type: string
-          description: Type of the issue
-        - in: formData
-          name: assignee
-          type: string
-          description: Assignee of the issue
-      responses:
-        200:
-          description: Success
-          schema:
-            type: object
-        401:
-          $ref: '#/responses/UnauthorizedError'
-        404:
-          $ref: '#/responses/NotFound'
-          
-  /issues/new:
+           
     post:
       tags: 
         - Issues
@@ -197,6 +126,98 @@ paths:
             $ref: '#/definitions/Issue'
         401:
           $ref: "#/responses/UnauthorizedError"
+  
+  /issues/{id}:
+    get:
+      tags:
+        - Issues
+      description: Gets an `Issue` object by id
+      produces: 
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          description: ID of an Issue
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: "#/definitions/Issue"
+        401:
+          $ref: '#/responses/UnauthorizedError'
+        404:
+          $ref: '#/responses/NotFound'
+          
+    delete:
+      tags:
+        - Issues
+      description: Delete a `Issue` object
+      produces: 
+        - application/json
+      parameters: 
+        - in: path
+          name: id
+          description: ID of an Issue
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+        401:
+          $ref: '#/responses/UnauthorizedError'
+        404:
+          $ref: '#/responses/NotFound'
+        403:
+          description: You can't delete an Issue created by other users
+    
+    put:
+      tags:
+        - Issues
+      description: Update an `Issue` object
+      consumes: 
+        - application/x-www-form-urlencoded
+      produces: 
+        - application/json
+      parameters: 
+        - in: path
+          name: id
+          description: ID of an Issue
+          required: true
+          type: integer
+        - in: formData
+          name: title
+          type: string
+          description: Title of the issue
+        - in: formData
+          name: status
+          type: string
+          description: Status of the issue
+        - in: formData
+          name: priority
+          type: string
+          description: Priority of the issue
+        - in: formData
+          name: type
+          type: string
+          description: Type of the issue
+        - in: formData
+          name: assignee
+          type: string
+          description: Assignee of the issue
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+        401:
+          $ref: '#/responses/UnauthorizedError'
+        404:
+          $ref: '#/responses/NotFound'
+          
 
   /issues/{issue_id}/comments:
     get:
@@ -471,59 +492,131 @@ responses:
   
 definitions:
   Issue:
-    type: "object"
+    type: object
     properties:
       id:
-        type: "integer"
-        example: "1"
+        type: integer
+        example: 1
       Title:
-        type: "string"
-        example: "Issue 1"
+        type: string
+        example: Issue 1
       Description:
-        type: "string"
-        example: "description"
+        type: string
+        example: description
       Type:
-        type: "string"
-        example: "Bug"
+        type: string
+        example: Bug
       Priority:
-        type: "string"
-        example: "Critical"
+        type: string
+        example: Critical
       Status:
-        type: "string"
-        example: "New"
-      user_id:
-        type: "integer"
-        example: "1"
+        type: string
+        example: New
+      Votes:
+        type: integer
+        example: 1
+      Watchers:
+        type: integer
+        example: 1
       created_at:
-        type: "string"
-        format: "date"
+        type: string
+        format: date
         example: "2017-05-07T18:28:01.933Z"
       updated_at:
-        type: "string"
-        format: "date"
+        type: string
+        format: date
         example: "2017-05-07T18:28:02.933Z"
-      Votes:
-        type: "integer"
-        example: 1
-      assignee_id:
-        type: "integer"
-        example: "1"
-      Watchers:
-        type: "integer"
-        example: "1"
       attachment_file_name:
-        type: "string"
-        example: "attachment.png"
+        type: string
+        example: attachment.png
       attachment_content_type:
-        type: "string"
-        example: "image/png"
+        type: string
+        example: image/png
       attachment_file_size:
-        type: "integer"
-        example: "100"
+        type: integer
+        example: 100
       attachment_updated_at:
-        type: "string"
-        format: "date"
+        type: string
+        format: date
         example: "2017-05-07T18:28:02.933Z"
+      _links:
+        type: object
+        properties:
+          self:
+            type: object
+            properties:
+              href:
+                type: string
+                example: /issues/1
+          creator:
+            type: object
+            properties:
+              href:
+                type: string
+                example: /users/1
+          assignee:
+            type: object
+            properties:
+              href:
+                type: string
+                example: /users/1
+        
+  IssueIndex:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      Title:
+        type: string
+        example: Issue 1
+      Description:
+        type: string
+        example: description
+      Type:
+        type: string
+        example: Bug
+      Priority:
+        type: string
+        example: Critical
+      Status:
+        type: string
+        example: New
+      Votes:
+        type: integer
+        example: 1
+      Watchers:
+        type: integer
+        example: 1
+      created_at:
+        type: string
+        format: date
+        example: "2017-05-07T18:28:01.933Z"
+      updated_at:
+        type: string
+        format: date
+        example: "2017-05-07T18:28:02.933Z"
+      _links:
+        type: object
+        properties:
+          self:
+            type: object
+            properties:
+              href:
+                type: string
+                example: /issues/1
+          creator:
+            type: object
+            properties:
+              href:
+                type: string
+                example: /users/1
+          assignee:
+            type: object
+            properties:
+              href:
+                type: string
+                example: /users/1
   
   Comment:
     type: object
