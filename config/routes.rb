@@ -68,6 +68,6 @@ Rails.application.routes.draw do
   post '/issues/:id/vote' => "issues#vote", as: :vote
   post '/issues/:id/watch' => "issues#watch", as: :watch
   
-  get '/issues/:id/status' => "issues#update_status", as: :update_status
+  put '/issues/:id/status' => "issues#update_status", as: :update_status
   
 end

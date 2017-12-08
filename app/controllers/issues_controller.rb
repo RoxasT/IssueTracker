@@ -102,6 +102,7 @@ class IssuesController < ApplicationController
     respond_to do |format|
       @issue_to_update = Issue.find(params[:id])
       @issue_to_update.update_attribute("Status", params[:status])
+      
       format.html { redirect_to @issue_to_update }
       format.json { render :show, status: params[:status], location: @issue_to_update }
     end
