@@ -65,6 +65,9 @@ Rails.application.routes.draw do
   get '/issues/:issue_id/comments/:id/attachment' => "comments#show_attachment"
   post '/issues/:issue_id/comments/:id/attachment' => "comments#create_attachment"
   
+  get '/issues/:id/attachment' => "issues#show_attachment"
+  post '/issues/:id/attachment' => "issues#create_attachment"
+
   post '/issues/:id/vote' => "issues#vote", as: :vote
   post '/issues/:id/watch' => "issues#watch", as: :watch
   
