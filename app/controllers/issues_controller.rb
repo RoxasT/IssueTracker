@@ -128,6 +128,7 @@ class IssuesController < ApplicationController
       else
         format.html { redirect_to @issue_to_watch}
       end
+      format.json { render json: @issue_to_watch, status: :ok }
     end
   end
   
