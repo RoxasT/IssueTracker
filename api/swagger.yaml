@@ -536,7 +536,40 @@ paths:
           $ref: '#/responses/UnauthorizedError'
         '404':
           $ref: '#/responses/NotFound'
-            
+  
+  '/issues/{issue_id}/status':        
+    put:
+      tags:
+        - Issues
+      description: Update status from an issue
+      consumes: 
+        - application/x-www-form-urlencoded
+      produces: 
+        - application/json
+      parameters: 
+        - in: path
+          name: issue_id
+          description: ID of the issue to watch/unwatch
+          required: true
+          type: integer
+        - in: formData
+          name: status
+          type: string
+          description: Nou status
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "status changed"
+        '401':
+          $ref: '#/responses/UnauthorizedError'
+        '404':
+          $ref: '#/responses/NotFound'
   
 responses:
   UnauthorizedError:
