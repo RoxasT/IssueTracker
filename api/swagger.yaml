@@ -361,6 +361,59 @@ paths:
         403:
           description: You can't delete a Comment created by other users
           
+  /issues/{issue_id}/attachment:
+    get:
+      tags:
+        - Attachments
+      description: Get an Attachment from Issue
+      produces: 
+        - application/json
+      parameters: 
+        - in: path
+          name: issue_id
+          description: ID of an Issue
+          required: true
+          type: integer
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/AttachmentIssue'
+        404:
+          description: This comment has no attachments
+        401:
+          $ref: '#/responses/UnauthorizedError'
+    post:
+      tags:
+        - Attachments
+      description: Attach a file to an Issue
+      produces:
+        - application/json
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: path
+          name: issue_id
+          description: ID of an Issue
+          required: true
+          type: integer
+        - in: formData
+          name: file
+          description: File encoded in base64
+          type: string
+          format: base64
+          required: true
+      responses:
+        201:
+          description: Created
+          schema:
+            $ref: '#/definitions/AttachmentIssue'
+        401:
+          $ref: '#/responses/UnauthorizedError'
+        403:
+          description: You can't attach a file to a Issue of other users
+      
+          
   /issues/{issue_id}/comments/{comment_id}/attachment:
     get:
       tags: 
@@ -413,11 +466,6 @@ paths:
           type: string
           format: base64
           required: true
-        - in: formData
-          name: filename
-          type: string
-          description: Original filename of the image
-          required: false
       responses:
         201:
           description: Created
@@ -624,12 +672,6 @@ definitions:
       body:
         type: string
         example: This is an example comment
-      issue_id:
-        type: integer
-        example: 10
-      user_id:
-        type: integer
-        example: 67
       created_at:
         type: string
         format: date
@@ -638,9 +680,33 @@ definitions:
         type: string
         format: date
         example: '2017-11-25T12:18:04.876Z'
-      attachment_id:
-        type: integer
-        example: 45
+      _links:
+        type: object
+        properties:
+          self:
+            type: object
+            properties:
+              href:
+                type: string
+                example: /issues/1/comments/21
+          issue:
+            type: object
+            properties:
+              href:
+                type: string
+                example: /issues/1
+          attachment:
+            type: object
+            properties:
+              href:
+                type: string
+                example: /issues/1/comments/21/attachment
+          creator:
+            type: object
+            properties:
+              href:
+                type: string
+                example: /users/1
         
   Attachment:
     type: object
@@ -676,6 +742,46 @@ definitions:
               href:
                 type: string
                 example: /issues/1/comments/21/attachment
+          creator:
+            type: object
+            properties:
+              href:
+                type: string
+                example: /users/1
+  AttachmentIssue:
+    type: object
+    properties:
+      attachment_content_type:
+        type: string
+        example: image/jpeg
+      attachment_file_name:
+        type: string
+        example: image.jpg
+      attachment_file_size:
+        type: integer
+        example: 2673366
+      attachment_updated_at:
+        type: string
+        format: date
+        example: "2017-12-04T10:22:10.641Z"
+      url:
+        type: string
+        example: http://example.com/image.jpg
+      _links:
+        type: object
+        properties:
+          issue:
+            type: object
+            properties:
+              href:
+                type: string
+                example: /issues/1
+          self:
+            type: object
+            properties:
+              href:
+                type: string
+                example: /issues/1/attachment
           creator:
             type: object
             properties:
