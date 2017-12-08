@@ -93,7 +93,7 @@ class CommentsController < ApplicationController
  
   private
     def comment_params
-      params.require(:comment).permit(:body, :attachment, :issue_id, :user_id)
+      params.permit(:body, :attachment, :issue_id, :user_id, :comment)
     end
 
     def record_not_found(error)
