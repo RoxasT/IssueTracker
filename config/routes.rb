@@ -61,15 +61,13 @@ Rails.application.routes.draw do
   #   end
   #get '/auth/google_oauth2/callback', to: 'users#auth'
   root 'issues#index'
-  get 'update_status' => "issues#update_status"
+  # get 'update_status' => "issues#update_status"
   get '/issues/:issue_id/comments/:id/attachment' => "comments#show_attachment"
   post '/issues/:issue_id/comments/:id/attachment' => "comments#create_attachment"
   
-  get '/issues/:id/attachment' => "issues#show_attachment"
-  post '/issues/:id/attachment' => "issues#create_attachment"
-
   post '/issues/:id/vote' => "issues#vote", as: :vote
   post '/issues/:id/watch' => "issues#watch", as: :watch
   
+  get '/issues/:id/status' => "issues#update_status", as: :update_status
   
 end
