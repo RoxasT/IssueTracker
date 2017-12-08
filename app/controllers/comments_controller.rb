@@ -69,7 +69,7 @@ class CommentsController < ApplicationController
       if @comment.attachment.file?
         format.json {render json: @comment, status: :ok, serializer: AttachmentSerializer}
       else
-        format.json {render json: {error: "This comment has no attachments"}, status: :not_found}
+        format.json {render json: {}, status: :ok}
       end
     end
   end

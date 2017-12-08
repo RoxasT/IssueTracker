@@ -184,7 +184,7 @@ class IssuesController < ApplicationController
       if @issue.attachment.file?
         format.json {render json: @issue, status: :ok, serializer: IssueattachmentSerializer}
       else
-        format.json {render json: {error: "This issue has no attachments"}, status: :not_found}
+        format.json {render json: {}, status: :ok}
       end
     end
   end
