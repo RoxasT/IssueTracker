@@ -242,6 +242,8 @@ paths:
               $ref: '#/definitions/Comment'
         401:
            $ref: "#/responses/UnauthorizedError"
+        404:
+          $ref: '#/responses/NotFound'
     
     post:
       tags: 
@@ -267,6 +269,8 @@ paths:
             $ref: '#/definitions/Comment'
         401:
           $ref: "#/responses/UnauthorizedError"
+        404:
+          $ref: '#/responses/NotFound'
     
   
   /issues/{issue_id}/comments/{comment_id}:
@@ -379,10 +383,11 @@ paths:
           description: Success
           schema:
             $ref: '#/definitions/AttachmentIssue'
-        404:
-          description: This comment has no attachments
         401:
           $ref: '#/responses/UnauthorizedError'
+        404:
+          description: Issue not found
+  
     post:
       tags:
         - Attachments
@@ -412,6 +417,8 @@ paths:
           $ref: '#/responses/UnauthorizedError'
         403:
           description: You can't attach a file to a Issue of other users
+        404:
+          description: Issue not found
       
           
   /issues/{issue_id}/comments/{comment_id}/attachment:
@@ -438,7 +445,7 @@ paths:
           schema:
             $ref: '#/definitions/Attachment'
         404:
-          description: This comment has no attachments
+          description: Issue or comment not found
         401:
           $ref: '#/responses/UnauthorizedError'
     post:
@@ -475,6 +482,8 @@ paths:
           $ref: '#/responses/UnauthorizedError'
         403:
           description: You can't attach an image to a comment of other users
+        404:
+          description: Issue or comment not found
           
   '/issues/{issue_id}/vote':
     post:
