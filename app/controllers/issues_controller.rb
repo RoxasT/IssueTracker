@@ -41,13 +41,17 @@ class IssuesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json {render json: @issues, status: :ok, each_serializer: IssueSerializer}
+      format.json {render json: @issues, status: :ok, each_serializer: IssueIndexSerializer}
     end
   end
 
   # GET /issues/1
   # GET /issues/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.json {render json: @issue, status: :ok, serializer: IssueSerializer}
+    end
   end
 
   # GET /issues/new
