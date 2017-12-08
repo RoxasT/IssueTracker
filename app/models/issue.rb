@@ -7,7 +7,7 @@ class Issue < ApplicationRecord
     validates :Title, :Type, :Priority, :Status, presence: true
     has_attached_file :attachment, styles: { medium: "300x300>", thumb: "100x100>" },
         :storage => :cloudinary,
-        :path => ':id/:filename',
+        :path => 'issues/:id/:filename',
         :cloudinary_resource_type => :raw    
     def self.status
         ["New", "Open", "On hold", "Resolved", "Duplicate", "Invalid", "Won't fix", "Closed"]
