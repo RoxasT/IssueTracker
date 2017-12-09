@@ -32,9 +32,9 @@
           <div class="dropdown">
             <span style="margin-right:5px; background: #8D8DF4; padding:8px; font-weight: bold">
               <% if @issue.Status == "Open" || @issue.Status == "New" %>
-                <a class="resolved"> <%= link_to 'Resolve', update_status_url(id: @issue.id, status: "Resolved") %> </a>
+                <a class="resolved"> <%= link_to 'Resolve', update_status_url(id: @issue.id, status: "Resolved"), method: :put %> </a>
               <% else %>
-                <%= link_to 'Open', update_status_url(id: @issue.id, status: "Open"), class:'open'%>
+                <%= link_to 'Open', update_status_url(id: @issue.id, status: "Open"), method: :put, class:'open'%>
               <% end %>
             </span>
             
@@ -43,7 +43,7 @@
               <ul class="dropdown-menu">
                 <% Issue.status.each do |status| %>
                   <% if status != @issue.Status %>
-                    <%= content_tag(:li, link_to(status, update_status_url(id: @issue.id, status: status))) %>
+                    <%= content_tag(:li, link_to(status, update_status_url(id: @issue.id, status: status), method: :put)) %>
                   <% end %>
                 <% end %>
               </ul>
@@ -130,9 +130,9 @@
             <dd class="votes">
                 <%= @issue.Votes %>
                   <% if !Vote.exists?(:issue_id => @issue.id, :user_id => current_user.id) %>
-                  <%= link_to 'Vote for this issue', vote_url(id: @issue.id), class:"vote" %>
+                  <%= link_to 'Vote for this issue', vote_url(id: @issue.id), method: :post, class:"vote" %>
                   <% else %>
-                  <%= link_to 'Remove vote', vote_url(id: @issue.id), class:"vote" %>
+                  <%= link_to 'Remove vote', vote_url(id: @issue.id), method: :post, class:"vote" %>
                   <% end %>
               </span>
             </dd>
@@ -143,9 +143,9 @@
             <dd class="watchers">
                 <%= @issue.Watchers %>
                   <% if !Watcher.exists?(:issue_id => @issue.id, :user_id => current_user.id) %>
-                  <%= link_to 'Watch this issue', watch_url(id: @issue.id, view: "issue"), class: "vote" %>
+                  <%= link_to 'Watch this issue', watch_url(id: @issue.id, view: "issue"), method: :post, class: "vote" %>
                   <% else %>
-                  <%= link_to 'Stop watching', watch_url(id: @issue.id, view: "issue"), class: "vote" %>
+                  <%= link_to 'Stop watching', watch_url(id: @issue.id, view: "issue"), method: :post, class: "vote" %>
                   <% end %>
               </span>
             </dd>

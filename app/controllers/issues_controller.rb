@@ -15,7 +15,7 @@ class IssuesController < ApplicationController
       if User.exists?(id: params[:assignee])
         @issues = @issues.where(assignee_id: params[:assignee])
       else
-        @issues = []
+        @issues = [{}]
       end
     end
     
@@ -36,7 +36,11 @@ class IssuesController < ApplicationController
     end
     
     if params.has_key?(:watcher)
-      @issues = Issue.joins(:watchers).where(watchers:{user_id: current_user.id})
+      if User.exists?(id: params[:watcher])
+        @issues = Issue.joins(:watchers).where(watchers:{user_id: params[:watcher]})
+      else
+        @issues = [{}]
+      end
     end
 
     respond_to do |format|
@@ -153,20 +157,6 @@ class IssuesController < ApplicationController
       end
       format.html { redirect_to @issue_to_vote }
       format.json { render json: @issue_to_vote, status: :ok }
-    end
-  end
-  
-  def unwatch
-    respond_to do |format|
-      @watcher = Watcher.where(issue_id: params[:id], user_id: current_user.id).take
-      @watcher.destroy
-      @issue_to_unwatch = Issue.find(params[:id])
-      @issue_to_unwatch.decrement!("Watchers")
-      if params[:view] == "index"
-        format.html { redirect_to issues_url}
-      else
-        format.html { redirect_to @issue_to_unwatch}
-      end
     end
   end
 

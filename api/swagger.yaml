@@ -27,7 +27,6 @@ paths:
         Gets `Issue` objects.
       produces:
         - "application/json"
-      # This is array of GET operation parameters:
       parameters:
       - in: "query"
         name: "type"
@@ -76,13 +75,9 @@ paths:
         required: false
         type: "integer"
         
-      # Expected responses for this operation:
       responses:
-        # Response code
         200:
           description: Successful response
-          # A schema describing your response object.
-          # Use JSON Schema format
           schema:
             title: ArrayOfIssues
             type: array
@@ -485,7 +480,7 @@ paths:
         404:
           description: Issue or comment not found
           
-  '/issues/{issue_id}/vote':
+  /issues/{issue_id}/vote:
     post:
       tags:
         - Issues
@@ -498,20 +493,16 @@ paths:
           type: integer
       
       responses:
-        '200':
-          description: Successful response
+        200:
+          description: Success
           schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: "Issue voted"
-        '401':
+            $ref: "#/definitions/Issue"
+        401:
           $ref: '#/responses/UnauthorizedError'
-        '404':
+        404:
           $ref: '#/responses/NotFound'
 
-  '/issues/{issue_id}/watch':
+  /issues/{issue_id}/watch:
     post:
       tags:
         - Issues
@@ -524,24 +515,20 @@ paths:
           type: integer
       
       responses:
-        '200':
-          description: Successful response
+        200:
+          description: Success
           schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: "Issue watched"
-        '401':
+            $ref: "#/definitions/Issue"
+        401:
           $ref: '#/responses/UnauthorizedError'
-        '404':
+        404:
           $ref: '#/responses/NotFound'
   
-  '/issues/{issue_id}/status':        
+  /issues/{issue_id}/status:        
     put:
       tags:
         - Issues
-      description: Update status from an issue
+      description: Update status of an issue
       consumes: 
         - application/x-www-form-urlencoded
       produces: 
@@ -554,21 +541,26 @@ paths:
           type: integer
         - in: formData
           name: status
-          type: string
-          description: Nou status
+          description: New status
           required: true
+          type: "string"
+          enum:
+          - "New"
+          - "Open"
+          - "On hold"
+          - "Resolved"
+          - "Duplicate"
+          - "Invalid"
+          - "Won't fix"
+          - "Closed"
       responses:
-        '200':
-          description: Successful response
+        200:
+          description: Success
           schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: "status changed"
-        '401':
+            $ref: "#/definitions/Issue"
+        401:
           $ref: '#/responses/UnauthorizedError'
-        '404':
+        404:
           $ref: '#/responses/NotFound'
   
 responses:
