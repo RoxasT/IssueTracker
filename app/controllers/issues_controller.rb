@@ -92,13 +92,11 @@ class IssuesController < ApplicationController
   # PATCH/PUT /issues/1.json
   def update
     respond_to do |format|
-      if @issue.update(issue_params)
-        format.html { redirect_to @issue }
-        format.json { render :show, status: :ok, location: @issue }
-      else
-        format.html { render :edit }
-        format.json { render json: @issue.errors, status: :unprocessable_entity }
-      end
+      @issue_to_update = Issue.find(params[:id])
+      @issue_to_update.update(issue_params)
+      
+      format.html { redirect_to @issue_to_update }
+      format.json { render json: @issue_to_update, status: :ok}
     end
   end
   
@@ -163,6 +161,7 @@ class IssuesController < ApplicationController
   # DELETE /issues/1
   # DELETE /issues/1.json
   def destroy
+    @issue = Issue.find(params[:id])
     @issue.destroy
     respond_to do |format|
       format.html { redirect_to issues_url }
