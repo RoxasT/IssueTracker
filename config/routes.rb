@@ -70,5 +70,5 @@ Rails.application.routes.draw do
   
   put '/issues/:id/status' => "issues#update_status", as: :update_status
   
-  get '/users/current_user' => "users#current_user", as: :current_user
+  get '/users/current' => "users#current", as: :current_user
 end

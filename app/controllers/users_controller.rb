@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     end
   end
   
-  def current_user
+  def current
     respond_to do |format|
       @user = User.find(current_user.id)
       format.html
