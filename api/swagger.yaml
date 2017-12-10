@@ -679,6 +679,12 @@ definitions:
       Watchers:
         type: integer
         example: 1
+      is_voted_by_current_user:
+        type: boolean
+        example: true
+      is_watched_by_current_user:
+        type: boolean
+        example: false
       created_at:
         type: string
         format: date
@@ -749,6 +755,12 @@ definitions:
       Watchers:
         type: integer
         example: 1
+      is_voted_by_current_user:
+        type: boolean
+        example: true
+      is_watched_by_current_user:
+        type: boolean
+        example: false
       created_at:
         type: string
         format: date

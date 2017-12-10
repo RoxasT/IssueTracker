@@ -1,5 +1,5 @@
 class IssueSerializer < ActiveModel::Serializer
-    attributes :id, :Title, :Description, :Type, :Priority, :Status, :Votes, :Watchers, :created_at, :updated_at, :attachment_file_name, :attachment_content_type, :attachment_file_size, :attachment_updated_at, :_links
+    attributes :id, :Title, :Description, :Type, :Priority, :Status, :Votes, :Watchers, :is_voted_by_current_user, :is_watched_by_current_user, :created_at, :updated_at, :attachment_file_name, :attachment_content_type, :attachment_file_size, :attachment_updated_at, :_links
     
     def _links
         links = {
@@ -9,4 +9,11 @@ class IssueSerializer < ActiveModel::Serializer
         }
     end
     
+    def is_voted_by_current_user
+        Vote.exists?(:issue_id => object.id, :user_id => current_user.id)
+    end
+    
+    def is_watched_by_current_user
+        Watcher.exists?(:issue_id => object.id, :user_id => current_user.id)
+    end
 end
