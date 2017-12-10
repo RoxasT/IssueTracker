@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { :omniauth_callbacks => 'users/omniauth_callbacks', :sessions => "users/sessions" } 
+  get '/users/current_user' => "users#the_current_user", as: :current_user
   resources :issues
   resources :users
   resources :issues do
@@ -69,6 +70,4 @@ Rails.application.routes.draw do
   post '/issues/:id/watch' => "issues#watch", as: :watch
   
   put '/issues/:id/status' => "issues#update_status", as: :update_status
-  
-  get '/users/current' => "users#current", as: :current_user
 end

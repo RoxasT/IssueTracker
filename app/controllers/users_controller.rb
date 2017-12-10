@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
   protect_from_forgery with: :null_session
   acts_as_token_authentication_handler_for User, fallback: :devise
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
   # GET /users
@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       @users = User.all
       format.html
-      format.json {render json: @users, status: :ok, each_serializer: UserIndexSerializer}
+      format.json {render json: @users, status: :ok, each_serializer: UserindexSerializer}
     end
   end
 
@@ -23,9 +23,13 @@ class UsersController < ApplicationController
     end
   end
   
+<<<<<<< HEAD
   def current
+=======
+  def the_current_user
+>>>>>>> ed9740ee03314e5ad006c969274b94bf489f03bb
     respond_to do |format|
-      @user = User.find(current_user.id)
+      @user = current_user
       format.html
       format.json {render json: @user, status: :ok, serializer: UserSerializer}
     end
