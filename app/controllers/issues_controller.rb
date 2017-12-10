@@ -8,42 +8,41 @@ class IssuesController < ApplicationController
   # GET /issues.json
   
   def index
-    
-    @issues = Issue.all
-    
-    if params.has_key?(:assignee)
-      if User.exists?(id: params[:assignee])
-        @issues = @issues.where(assignee_id: params[:assignee])
-      else
-        @issues = [{}]
-      end
-    end
-    
-    if params.has_key?(:type)
-      @issues = @issues.where(Type: params[:type])
-    end
-    
-    if params.has_key?(:priority)
-      @issues = @issues.where(Priority: params[:priority])
-    end
-    
-    if params.has_key?(:status)
-      if params[:status] == "New&Open"
-        @issues = @issues.where(Status: ["Open","New"])
-      else
-      @issues = @issues.where(Status: params[:status])
-      end
-    end
-    
-    if params.has_key?(:watcher)
-      if User.exists?(id: params[:watcher])
-        @issues = Issue.joins(:watchers).where(watchers:{user_id: params[:watcher]})
-      else
-        @issues = [{}]
-      end
-    end
-
     respond_to do |format|
+      @issues = Issue.all
+      
+      if params.has_key?(:assignee)
+        if User.exists?(id: params[:assignee])
+          @issues = @issues.where(assignee_id: params[:assignee])
+        else
+          format.json {render json: {"error":"User with id="+params[:assignee]+" does not exist"}, status: :unprocessable_entity}
+        end
+      end
+      
+      if params.has_key?(:type)
+        @issues = @issues.where(Type: params[:type])
+      end
+      
+      if params.has_key?(:priority)
+        @issues = @issues.where(Priority: params[:priority])
+      end
+      
+      if params.has_key?(:status)
+        if params[:status] == "New&Open"
+          @issues = @issues.where(Status: ["Open","New"])
+        else
+        @issues = @issues.where(Status: params[:status])
+        end
+      end
+      
+      if params.has_key?(:watcher)
+        if User.exists?(id: params[:watcher])
+          @issues = Issue.joins(:watchers).where(watchers:{user_id: params[:watcher]})
+        else
+          format.json {render json: {"error":"User with id="+params[:watcher]+" does not exist"}, status: :unprocessable_entity}
+        end
+      end
+
       format.html
       format.json {render json: @issues, status: :ok, each_serializer: IssueIndexSerializer}
     end
@@ -73,17 +72,21 @@ class IssuesController < ApplicationController
     @issue = Issue.new(issue_params)
     @issue.user_id = current_user.id
     respond_to do |format|
-      if @issue.save
-        @watcher = Watcher.new
-        @watcher.user_id = current_user.id
-        @watcher.issue_id = @issue.id
-        @watcher.save
-        @issue.increment!("Watchers")
-        format.html { redirect_to @issue }
-        format.json { render json: @issue, status: :created, serializer: IssueSerializer }
+      if !User.exists?(id: params[:assignee_id])
+          format.json {render json: {"error":"User with id="+params[:assignee_id]+" does not exist"}, status: :unprocessable_entity}
       else
-        format.html { render :new }
-        format.json { render json: @issue.errors, status: :unprocessable_entity }
+        if @issue.save
+          @watcher = Watcher.new
+          @watcher.user_id = current_user.id
+          @watcher.issue_id = @issue.id
+          @watcher.save
+          @issue.increment!("Watchers")
+          format.html { redirect_to @issue }
+          format.json { render json: @issue, status: :created, serializer: IssueSerializer }
+        else
+          format.html { render :new }
+          format.json { render json: @issue.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -92,11 +95,15 @@ class IssuesController < ApplicationController
   # PATCH/PUT /issues/1.json
   def update
     respond_to do |format|
-      @issue_to_update = Issue.find(params[:id])
-      @issue_to_update.update(issue_params)
-      
-      format.html { redirect_to @issue_to_update }
-      format.json { render json: @issue_to_update, status: :ok, serializer: IssueSerializer}
+      if !User.exists?(id: params[:assignee_id])
+          format.json {render json: {"error":"User with id="+params[:assignee_id]+" does not exist"}, status: :unprocessable_entity}
+      else
+        @issue_to_update = Issue.find(params[:id])
+        @issue_to_update.update(issue_params)
+        
+        format.html { redirect_to @issue_to_update }
+        format.json { render json: @issue_to_update, status: :ok, serializer: IssueSerializer}
+      end
     end
   end
   
