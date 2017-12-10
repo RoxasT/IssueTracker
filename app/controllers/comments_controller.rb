@@ -1,11 +1,11 @@
 class CommentsController < ApplicationController
-  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
   protect_from_forgery with: :null_session
   acts_as_token_authentication_handler_for User, fallback: :devise
   before_action :authenticate_user!
 
   def index
-    comments = Comment.where(issue_id: params[:issue_id])
+    @issue = Issue.find(params[:issue_id])
+    comments = @issue.comments
     respond_to do |format|
       format.json {render json: comments, status: :ok, each_serializer: CommentSerializer}
     end
@@ -95,11 +95,5 @@ class CommentsController < ApplicationController
   private
     def comment_params
       params.permit(:body, :attachment, :issue_id, :user_id, :comment)
-    end
-
-    def record_not_found(error)
-      respond_to do |format|
-        format.json {render json: {error: error.message }, status: :not_found}
-      end
     end
 end
