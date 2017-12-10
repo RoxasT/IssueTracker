@@ -94,23 +94,51 @@ paths:
         - application/x-www-form-urlencoded
       parameters: 
         - in: formData
-          name: title
+          name: Title
           type: string
           description: Title of the issue
+          required: true
         - in: formData
-          name: status
+          name: Description
+          type: string
+          description: Description of the issue
+        - in: formData
+          name: Status
           type: string
           description: Status of the issue
+          required: true
+          enum:
+          - "New"
+          - "Open"
+          - "On hold"
+          - "Resolved"
+          - "Duplicate"
+          - "Invalid"
+          - "Won't fix"
+          - "Closed"
         - in: formData
-          name: priority
+          name: Priority
           type: string
           description: Priority of the issue
+          required: true
+          enum:
+          - "Trivial"
+          - "Minor"
+          - "Major"
+          - "Critical"
+          - "Blocker"
         - in: formData
-          name: type
+          name: Type
           type: string
           description: Type of the issue
+          required: true
+          enum:
+          - "Bug"
+          - "Enhancement"
+          - "Proposal"
+          - "Task"
         - in: formData
-          name: assignee
+          name: assignee_id
           type: string
           description: Assignee of the issue
             
@@ -158,7 +186,7 @@ paths:
           required: true
           type: integer
       responses:
-        200:
+        204:
           description: Success
           schema:
             type: object
@@ -177,32 +205,61 @@ paths:
         - application/x-www-form-urlencoded
       produces: 
         - application/json
-      parameters: 
+      parameters:
         - in: path
           name: id
-          description: ID of an Issue
+          type: string
+          description: Id of the issue
           required: true
-          type: integer
         - in: formData
           name: title
           type: string
           description: Title of the issue
+          required: true
+        - in: formData
+          name: description
+          type: string
+          description: Description of the issue
         - in: formData
           name: status
           type: string
           description: Status of the issue
+          required: true
+          enum:
+          - "New"
+          - "Open"
+          - "On hold"
+          - "Resolved"
+          - "Duplicate"
+          - "Invalid"
+          - "Won't fix"
+          - "Closed"
         - in: formData
           name: priority
           type: string
           description: Priority of the issue
+          required: true
+          enum:
+          - "Trivial"
+          - "Minor"
+          - "Major"
+          - "Critical"
+          - "Blocker"
         - in: formData
           name: type
           type: string
           description: Type of the issue
+          required: true
+          enum:
+          - "Bug"
+          - "Enhancement"
+          - "Proposal"
+          - "Task"
         - in: formData
           name: assignee
           type: string
           description: Assignee of the issue
+            
       responses:
         200:
           description: Success
