@@ -16,7 +16,15 @@ class UsersController < ApplicationController
   def show
     respond_to do |format|
       format.html
-      format.json {render json: @users, status: :ok, each_serializer: UserSerializer}
+      format.json {render json: @user, status: :ok, serializer: UserSerializer}
+    end
+  end
+  
+  def current_user
+    respond_to do |format|
+      @user = Users.find(current_user.id)
+      format.html
+      format.json {render json: @user, status: :ok, serializer: UserSerializer}
     end
   end
 
