@@ -608,7 +608,7 @@ paths:
       parameters: 
         - in: path
           name: issue_id
-          description: ID of the issue to watch/unwatch
+          description: ID of the issue
           required: true
           type: integer
         - in: formData
@@ -634,6 +634,66 @@ paths:
           $ref: '#/responses/UnauthorizedError'
         404:
           $ref: '#/responses/NotFound'
+  
+  /users:
+    get:
+      tags:
+        - Users
+      description:
+        Gets `User` objects.
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Success
+          schema:
+            title: ArrayOfUsers
+            type: array
+            items:
+              $ref: "#/definitions/User"
+        401:
+          $ref: '#/responses/UnauthorizedError'
+  
+  /users/{id}:
+    get:
+      tags:
+       - Users
+      description:
+        Gets `User` object by id
+      produces:
+      - application/json
+      parameters: 
+      - in: path
+        name: id
+        description: ID of the user
+        required: true
+        type: integer
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: "#/definitions/UserDetails"
+        401:
+          $ref: '#/responses/UnauthorizedError'
+        404:
+          $ref: '#/responses/NotFound'
+  
+  /users/current_user:
+    get:
+      tags:
+       - Users
+      description:
+        Gets `User` object of the current user
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: "#/definitions/UserDetails"
+        401:
+          $ref: '#/responses/UnauthorizedError'
+      
   
 responses:
   UnauthorizedError:
@@ -913,3 +973,32 @@ definitions:
               href:
                 type: string
                 example: /users/1
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      name: 
+        type: string
+        example: "Aleix Balletbó"
+      email:
+        type: string
+        example: "aleix.balletbo@est.fib.upc.edu"
+  
+  UserDetails:
+    type: object
+    properties:
+      id:
+        type: integer
+        example: 1
+      name: 
+        type: string
+        example: "Aleix Balletbó"
+      email:
+        type: string
+        example: "aleix.balletbo@est.fib.upc.edu"
+      issues_created:
+        type: array
+        items:
+          $ref: "#/definitions/Issue"
