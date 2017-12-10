@@ -165,7 +165,7 @@ class IssuesController < ApplicationController
     @issue.destroy
     respond_to do |format|
       format.html { redirect_to issues_url }
-      format.json { render json: {message: success}, status: :ok }
+      format.json { render json: {"message": "success"}, status: :ok }
     end
   end
 
