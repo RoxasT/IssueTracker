@@ -8,6 +8,7 @@ host: arcane-falls-72768.herokuapp.com
 
 securityDefinitions:
    # X-User-Token Aleix: itZhA1GN8j_szrA7BG7_
+   # X-User-Token Xavi: DntD-JGzAHPYZvCz6jnP
    APIKeyHeader:
      type: apiKey
      in: header
