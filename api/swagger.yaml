@@ -146,7 +146,7 @@ paths:
           - "Task"
         - in: formData
           name: assignee_id
-          type: string
+          type: integer
           description: Assignee of the issue
             
       responses:
@@ -398,10 +398,16 @@ paths:
             type: object
         401:
           $ref: '#/responses/UnauthorizedError'
+        403:
+          description: You can't delete a Comment created by other users
+          schema:
+            type: "object"
+            properties:
+              error:
+                example: "Forbidden, you are not the creator of this comment"
         404:
           $ref: '#/responses/NotFound'
-        403:
-          description: You can't edit a Comment created by other users
+        
           
     delete:
       tags:
@@ -427,10 +433,15 @@ paths:
             type: object
         401:
           $ref: '#/responses/UnauthorizedError'
-        404:
-          $ref: '#/responses/NotFound'
         403:
           description: You can't delete a Comment created by other users
+          schema:
+            type: "object"
+            properties:
+              error:
+                example: "Forbidden, you are not the creator of this comment"
+        404:
+          $ref: '#/responses/NotFound'
           
   /issues/{issue_id}/attachment:
     get:
@@ -453,7 +464,7 @@ paths:
         401:
           $ref: '#/responses/UnauthorizedError'
         404:
-          description: Issue not found
+          $ref: '#/responses/NotFound'
   
     post:
       tags:
@@ -484,8 +495,13 @@ paths:
           $ref: '#/responses/UnauthorizedError'
         403:
           description: You can't attach a file to a Issue of other users
+          schema:
+            type: "object"
+            properties:
+              error:
+                example: "Forbidden, you are not the creator of this issue"
         404:
-          description: Issue not found
+          $ref: '#/responses/NotFound'
       
           
   /issues/{issue_id}/comments/{comment_id}/attachment:
@@ -511,10 +527,11 @@ paths:
           description: Success
           schema:
             $ref: '#/definitions/Attachment'
-        404:
-          description: Issue or comment not found
         401:
           $ref: '#/responses/UnauthorizedError'
+        404:
+          $ref: '#/responses/NotFound'
+        
     post:
       tags:
         - Attachments
@@ -549,8 +566,13 @@ paths:
           $ref: '#/responses/UnauthorizedError'
         403:
           description: You can't attach an image to a comment of other users
+          schema:
+            type: "object"
+            properties:
+              error:
+                example: "Forbidden, you are not the creator of this comment"
         404:
-          description: Issue or comment not found
+          $ref: '#/responses/NotFound'
           
   /issues/{issue_id}/vote:
     post:
