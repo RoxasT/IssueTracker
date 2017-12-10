@@ -85,6 +85,13 @@ paths:
               $ref: "#/definitions/IssueIndex"
         401:
            $ref: "#/responses/UnauthorizedError"
+        422:
+          description: "User does not exist"
+          schema:
+            type: "object"
+            properties:
+              error:
+               example: "User with id=1000 does not exist"
            
     post:
       tags: 
@@ -186,16 +193,17 @@ paths:
           required: true
           type: integer
       responses:
-        204:
+        200:
           description: Success
           schema:
-            type: object
+            type: "object"
+            properties:
+              message:
+                example: "success"
         401:
           $ref: '#/responses/UnauthorizedError'
         404:
           $ref: '#/responses/NotFound'
-        403:
-          description: You can't delete an Issue created by other users
     
     put:
       tags:
@@ -212,16 +220,16 @@ paths:
           description: Id of the issue
           required: true
         - in: formData
-          name: title
+          name: Title
           type: string
           description: Title of the issue
           required: true
         - in: formData
-          name: description
+          name: Description
           type: string
           description: Description of the issue
         - in: formData
-          name: status
+          name: Status
           type: string
           description: Status of the issue
           required: true
@@ -235,7 +243,7 @@ paths:
           - "Won't fix"
           - "Closed"
         - in: formData
-          name: priority
+          name: Priority
           type: string
           description: Priority of the issue
           required: true
@@ -246,7 +254,7 @@ paths:
           - "Critical"
           - "Blocker"
         - in: formData
-          name: type
+          name: Type
           type: string
           description: Type of the issue
           required: true
@@ -256,7 +264,7 @@ paths:
           - "Proposal"
           - "Task"
         - in: formData
-          name: assignee
+          name: assignee_id
           type: string
           description: Assignee of the issue
             
@@ -269,6 +277,13 @@ paths:
           $ref: '#/responses/UnauthorizedError'
         404:
           $ref: '#/responses/NotFound'
+        422:
+          description: "User does not exist"
+          schema:
+            type: "object"
+            properties:
+              error:
+               example: "User with id=1000 does not exist"
           
 
   /issues/{issue_id}/comments:
@@ -623,11 +638,18 @@ paths:
 responses:
   UnauthorizedError:
     description: API key is missing or invalid
-    headers:
-      WWW_Authenticate:
-        type: string
+    schema:
+      type: "object"
+      properties:
+        error:
+          example: "You need to sign in or sign up before continuing."
   NotFound:
-    description: Resource not found
+    description: "Object not found"
+    schema:
+      type: "object"
+      properties:
+        error:
+          example: "Couldn't find Object with 'id'=10"
   
 definitions:
   Issue:
