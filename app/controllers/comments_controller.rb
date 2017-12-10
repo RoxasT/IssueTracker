@@ -12,7 +12,8 @@ class CommentsController < ApplicationController
   end
 
   def show
-    @comment = Comment.find(params[:id])
+    @issue = Issue.find(params[:issue_id])
+    @comment = @issue.comments.find(params[:id])
     respond_to do |format|
       format.json {render json: @comment, status: :ok, each_serializer: CommentSerializer}
     end
