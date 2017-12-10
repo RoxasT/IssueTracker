@@ -80,7 +80,7 @@ class IssuesController < ApplicationController
         @watcher.save
         @issue.increment!("Watchers")
         format.html { redirect_to @issue }
-        format.json { render :show, status: :created, location: @issue }
+        format.json { render json: @issue, status: :created, serializer: IssueSerializer }
       else
         format.html { render :new }
         format.json { render json: @issue.errors, status: :unprocessable_entity }
@@ -96,7 +96,7 @@ class IssuesController < ApplicationController
       @issue_to_update.update(issue_params)
       
       format.html { redirect_to @issue_to_update }
-      format.json { render json: @issue_to_update, status: :ok}
+      format.json { render json: @issue_to_update, status: :ok, serializer: IssueSerializer}
     end
   end
   
@@ -165,7 +165,7 @@ class IssuesController < ApplicationController
     @issue.destroy
     respond_to do |format|
       format.html { redirect_to issues_url }
-      format.json { head :no_content }
+      format.json { render "Success", status: :ok }
     end
   end
 
