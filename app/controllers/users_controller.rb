@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   
   def current_user
     respond_to do |format|
-      @user = Users.find(current_user.id)
+      @user = User.find(current_user.id)
       format.html
       format.json {render json: @user, status: :ok, serializer: UserSerializer}
     end
