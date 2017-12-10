@@ -1,5 +1,9 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
+  protect_from_forgery with: :null_session
+  acts_as_token_authentication_handler_for User, fallback: :devise
+  before_action :authenticate_user!
 
   # GET /users
   # GET /users.json
