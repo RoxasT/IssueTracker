@@ -23,11 +23,7 @@ class UsersController < ApplicationController
     end
   end
   
-<<<<<<< HEAD
-  def current
-=======
   def the_current_user
->>>>>>> ed9740ee03314e5ad006c969274b94bf489f03bb
     respond_to do |format|
       @user = current_user
       format.html
