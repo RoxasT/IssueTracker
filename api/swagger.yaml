@@ -158,6 +158,13 @@ paths:
             $ref: '#/definitions/Issue'
         401:
           $ref: "#/responses/UnauthorizedError"
+        422:
+          description: "User does not exist"
+          schema:
+            type: "object"
+            properties:
+              error:
+               example: "User with id=1000 does not exist"
   
   /issues/{id}:
     get:
