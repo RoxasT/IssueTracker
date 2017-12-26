@@ -4,8 +4,8 @@ class IssueIndexSerializer < ActiveModel::Serializer
     def _links
         links = {
             self: { href: "/issues/#{object.id}" },
-            creator: { href: "/users/#{object.user_id}", name: User.find(object.user_id).name },
-            assignee: { href: "/users/#{object.assignee_id}", name: User.find(object.assignee_id).name },
+            creator: { href: "/users/#{object.user_id}", id: object.user_id, name: User.find(object.user_id).name },
+            assignee: { href: "/users/#{object.assignee_id}", id: object.assignee_id, name: User.find(object.assignee_id).name },
         }
     end
     
