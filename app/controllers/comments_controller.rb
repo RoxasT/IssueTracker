@@ -80,7 +80,7 @@ class CommentsController < ApplicationController
     @comment = @issue.comments.find(params[:id])
     if @comment.user_id == current_user.id
       @comment.attachment = Paperclip.io_adapters.for(params[:file])
-      @comment.attachment.instance_write(:file_name, SecureRandom.hex(10))
+      #@comment.attachment.instance_write(:file_name, SecureRandom.hex(10))
       @comment.save
     end
     respond_to do |format|
