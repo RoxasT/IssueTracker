@@ -6,14 +6,14 @@ class CommentSerializer < ActiveModel::Serializer
         if object.attachment.file?
           links = {
               self: { href: "/issues/#{object.issue_id}/comments/#{object.id}"},
-              creator: { href: "/users/#{object.user_id}"},
+              creator: { href: "/users/#{object.user_id}", name: User.find(object.user_id).name, id: object.user_id},
               issue: {href: "/issues/#{object.issue_id}"},
               attachment: {href: "/issues/#{object.issue_id}/comments/#{object.id}/attachment"} 
           }
         else
           links = {
             self: { href: "/issues/#{object.issue_id}/comments/#{object.id}"},
-            creator: { href: "/users/#{object.user_id}"},
+            creator: { href: "/users/#{object.user_id}", name: User.find(object.user_id).name, id: object.user_id},
             issue: {href: "/issues/#{object.issue_id}"},
           }
         end
