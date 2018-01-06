@@ -12,7 +12,7 @@ class IssueSerializer < ActiveModel::Serializer
             links = {
                 self: { href: "/issues/#{object.id}" },
                 creator: { href: "/users/#{object.user_id}", id: object.user_id, name: User.find(object.user_id).name },
-                assignee: { href: null, id: null, name: null },
+                assignee: { href: nil, id: nil, name: nil },
             }
         end
     end
