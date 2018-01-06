@@ -72,8 +72,8 @@ class IssuesController < ApplicationController
     @issue = Issue.new(issue_params)
     @issue.user_id = current_user.id
     respond_to do |format|
-      if params.has_key?(:assignee_id) && params[:assignee_id] != nil && !User.exists?(id: params[:assignee_id])
-          format.json {render json: {"error":"User with id="+params[:assignee_id]+" does not exist"}, status: :unprocessable_entity}
+      if (issue_params.has_key?(:assignee_id) && issue_params[:assignee_id] != "" && !User.exists?(id: issue_params[:assignee_id]))
+          format.json {render json: {"error":"User with id="+issue_params[:assignee_id]+" does not exist"}, status: :unprocessable_entity}
       else
         if @issue.save
           @watcher = Watcher.new
