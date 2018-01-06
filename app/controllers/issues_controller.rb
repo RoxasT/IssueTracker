@@ -72,7 +72,7 @@ class IssuesController < ApplicationController
     @issue = Issue.new(issue_params)
     @issue.user_id = current_user.id
     respond_to do |format|
-      if !User.exists?(id: params[:assignee_id])
+      if params.has_key[:assignee_id] && params[:assignee_id] != nil && !User.exists?(id: params[:assignee_id])
           format.json {render json: {"error":"User with id="+params[:assignee_id]+" does not exist"}, status: :unprocessable_entity}
       else
         if @issue.save
@@ -191,7 +191,7 @@ class IssuesController < ApplicationController
     @issue = Issue.find(params[:id])
     if @issue.user.id == current_user.id
       @issue.attachment = Paperclip.io_adapters.for(params[:file])
-      #@issue.attachment.instance_write(:file_name, SecureRandom.hex(10))
+      @issue.attachment.instance_write(:file_name, SecureRandom.hex(10))
       @issue.save
     end
     respond_to do |format|
