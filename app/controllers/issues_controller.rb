@@ -191,7 +191,6 @@ class IssuesController < ApplicationController
     @issue = Issue.find(params[:id])
     if @issue.user.id == current_user.id
       @issue.attachment = Paperclip.io_adapters.for(params[:file])
-      @issue.attachment.instance_write(:file_name, SecureRandom.hex(10))
       @issue.save
     end
     respond_to do |format|
